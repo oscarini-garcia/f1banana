@@ -23,50 +23,54 @@ const CONFIG = {
 
   // --- Pilotos 2026 ---
   DRIVERS: [
-    { id: 'verstappen',  name: 'Max Verstappen',      team: 'red-bull',     number: 1  },
-    { id: 'lawson',      name: 'Liam Lawson',          team: 'red-bull',     number: 30 },
-    { id: 'leclerc',     name: 'Charles Leclerc',      team: 'ferrari',      number: 16 },
-    { id: 'hamilton',    name: 'Lewis Hamilton',        team: 'ferrari',      number: 44 },
-    { id: 'norris',      name: 'Lando Norris',         team: 'mclaren',      number: 4  },
-    { id: 'piastri',     name: 'Oscar Piastri',        team: 'mclaren',      number: 81 },
-    { id: 'russell',     name: 'George Russell',        team: 'mercedes',     number: 63 },
-    { id: 'antonelli',   name: 'Kimi Antonelli',       team: 'mercedes',     number: 12 },
-    { id: 'alonso',      name: 'Fernando Alonso',      team: 'aston-martin', number: 14 },
-    { id: 'stroll',      name: 'Lance Stroll',         team: 'aston-martin', number: 18 },
-    { id: 'sainz',       name: 'Carlos Sainz',         team: 'williams',     number: 55 },
-    { id: 'albon',       name: 'Alex Albon',           team: 'williams',     number: 23 },
-    { id: 'gasly',       name: 'Pierre Gasly',         team: 'alpine',       number: 10 },
-    { id: 'doohan',      name: 'Jack Doohan',          team: 'alpine',       number: 7  },
-    { id: 'tsunoda',     name: 'Yuki Tsunoda',         team: 'rb',           number: 22 },
-    { id: 'hadjar',      name: 'Isack Hadjar',         team: 'rb',           number: 6  },
-    { id: 'ocon',        name: 'Esteban Ocon',         team: 'haas',         number: 31 },
-    { id: 'bearman',     name: 'Oliver Bearman',       team: 'haas',         number: 87 },
-    { id: 'hulkenberg',  name: 'Nico Hülkenberg',      team: 'sauber',       number: 27 },
-    { id: 'bortoleto',   name: 'Gabriel Bortoleto',    team: 'sauber',       number: 5  },
+    { id: 'verstappen',  name: 'Max Verstappen',      team: 'red-bull',      number: 3  },
+    { id: 'hadjar',      name: 'Isack Hadjar',         team: 'red-bull',      number: 6  },
+    { id: 'leclerc',     name: 'Charles Leclerc',      team: 'ferrari',       number: 16 },
+    { id: 'hamilton',    name: 'Lewis Hamilton',        team: 'ferrari',       number: 44 },
+    { id: 'norris',      name: 'Lando Norris',         team: 'mclaren',       number: 1  },
+    { id: 'piastri',     name: 'Oscar Piastri',        team: 'mclaren',       number: 81 },
+    { id: 'russell',     name: 'George Russell',        team: 'mercedes',      number: 63 },
+    { id: 'antonelli',   name: 'Kimi Antonelli',       team: 'mercedes',      number: 12 },
+    { id: 'alonso',      name: 'Fernando Alonso',      team: 'aston-martin',  number: 14 },
+    { id: 'stroll',      name: 'Lance Stroll',         team: 'aston-martin',  number: 18 },
+    { id: 'sainz',       name: 'Carlos Sainz',         team: 'williams',      number: 55 },
+    { id: 'albon',       name: 'Alex Albon',           team: 'williams',      number: 23 },
+    { id: 'gasly',       name: 'Pierre Gasly',         team: 'alpine',        number: 10 },
+    { id: 'colapinto',   name: 'Franco Colapinto',     team: 'alpine',        number: 43 },
+    { id: 'lawson',      name: 'Liam Lawson',          team: 'racing-bulls',  number: 30 },
+    { id: 'lindblad',    name: 'Arvid Lindblad',       team: 'racing-bulls',  number: 41 },
+    { id: 'ocon',        name: 'Esteban Ocon',         team: 'haas',          number: 31 },
+    { id: 'bearman',     name: 'Oliver Bearman',       team: 'haas',          number: 87 },
+    { id: 'hulkenberg',  name: 'Nico Hülkenberg',      team: 'audi',          number: 27 },
+    { id: 'bortoleto',   name: 'Gabriel Bortoleto',    team: 'audi',          number: 5  },
+    { id: 'perez',       name: 'Sergio Pérez',         team: 'cadillac',      number: 11 },
+    { id: 'bottas',      name: 'Valtteri Bottas',      team: 'cadillac',      number: 77 },
   ],
 
   // --- Equipos / Constructores 2026 ---
   TEAMS: [
-    { id: 'red-bull',     name: 'Red Bull Racing',   abbr: 'RBR', color: '#3671C6',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/red-bull-racing-logo.png' },
-    { id: 'ferrari',      name: 'Ferrari',            abbr: 'FER', color: '#E8002D',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/ferrari-logo.png' },
-    { id: 'mclaren',      name: 'McLaren',            abbr: 'MCL', color: '#FF8000',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/mclaren-logo.png' },
-    { id: 'mercedes',     name: 'Mercedes',           abbr: 'MER', color: '#27F4D2',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/mercedes-logo.png' },
-    { id: 'aston-martin', name: 'Aston Martin',       abbr: 'AMR', color: '#229971',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/aston-martin-logo.png' },
-    { id: 'williams',     name: 'Williams',           abbr: 'WIL', color: '#64C4FF',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/williams-logo.png' },
-    { id: 'alpine',       name: 'Alpine',             abbr: 'ALP', color: '#FF87BC',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/alpine-logo.png' },
-    { id: 'rb',           name: 'RB',                 abbr: 'RB',  color: '#6692FF',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/rb-logo.png' },
-    { id: 'haas',         name: 'Haas',               abbr: 'HAS', color: '#B6BABD',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/haas-logo.png' },
-    { id: 'sauber',       name: 'Sauber / Audi',      abbr: 'SAU', color: '#52E252',
-      logo: 'https://media.formula1.com/content/dam/fom-website/teams/2025/kick-sauber-logo.png' },
+    { id: 'red-bull',      name: 'Red Bull Racing',   abbr: 'RBR', color: '#3671C6',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/redbullracing/2026redbullracinglogowhite.webp' },
+    { id: 'ferrari',       name: 'Ferrari',            abbr: 'FER', color: '#E8002D',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/ferrari/2026ferrarilogowhite.webp' },
+    { id: 'mclaren',       name: 'McLaren',            abbr: 'MCL', color: '#FF8000',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/mclaren/2026mclarenlogowhite.webp' },
+    { id: 'mercedes',      name: 'Mercedes',           abbr: 'MER', color: '#27F4D2',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/mercedes/2026mercedeslogowhite.webp' },
+    { id: 'aston-martin',  name: 'Aston Martin',       abbr: 'AMR', color: '#229971',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/astonmartin/2026astonmartinlogowhite.webp' },
+    { id: 'williams',      name: 'Williams',           abbr: 'WIL', color: '#64C4FF',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/williams/2026williamslogowhite.webp' },
+    { id: 'alpine',        name: 'Alpine',             abbr: 'ALP', color: '#FF87BC',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/alpine/2026alpinelogowhite.webp' },
+    { id: 'racing-bulls',  name: 'Racing Bulls',       abbr: 'RCB', color: '#6692FF',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/racingbulls/2026racingbullslogowhite.webp' },
+    { id: 'haas',          name: 'Haas',               abbr: 'HAS', color: '#B6BABD',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/haasf1team/2026haasf1teamlogowhite.webp' },
+    { id: 'audi',          name: 'Audi',               abbr: 'AUD', color: '#52E252',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/audi/2026audilogowhite.webp' },
+    { id: 'cadillac',      name: 'Cadillac',           abbr: 'CAD', color: '#C0A44D',
+      logo: 'https://media.formula1.com/image/upload/c_lfill,w_48/q_auto/v1740000000/common/f1/2026/cadillac/2026cadillaclogowhite.webp' },
   ],
 
   // --- Fases ---
@@ -177,12 +181,38 @@ function getCurrentPhase() {
   return 1;
 }
 
-// Driver photo URL from F1 CDN
+// Driver photo URL from F1 CDN (2026 season)
+const DRIVER_IMAGE_MAP = {
+  'verstappen':  'redbullracing/maxver01/2026redbullracingmaxver01right',
+  'hadjar':      'redbullracing/isahad01/2026redbullracingisahad01right',
+  'leclerc':     'ferrari/chalec01/2026ferrarichalec01right',
+  'hamilton':    'ferrari/lewham01/2026ferrarilewham01right',
+  'norris':      'mclaren/lannor01/2026mclarenlannor01right',
+  'piastri':     'mclaren/oscpia01/2026mclarenoscpia01right',
+  'russell':     'mercedes/georus01/2026mercedesgeorus01right',
+  'antonelli':   'mercedes/andant01/2026mercedesandant01right',
+  'alonso':      'astonmartin/feralo01/2026astonmartinferalo01right',
+  'stroll':      'astonmartin/lanstr01/2026astonmartinlanstr01right',
+  'sainz':       'williams/carsai01/2026williamscarsai01right',
+  'albon':       'williams/alealb01/2026williamsalealb01right',
+  'gasly':       'alpine/piegas01/2026alpinepiegas01right',
+  'colapinto':   'alpine/fracol01/2026alpinefracol01right',
+  'lawson':      'racingbulls/lialaw01/2026racingbullslialaw01right',
+  'lindblad':    'racingbulls/arvlin01/2026racingbullsarvlin01right',
+  'ocon':        'haasf1team/estoco01/2026haasf1teamestoco01right',
+  'bearman':     'haasf1team/olibea01/2026haasf1teamolibea01right',
+  'hulkenberg':  'audi/nichul01/2026audinichul01right',
+  'bortoleto':   'audi/gabbor01/2026audigabbor01right',
+  'perez':       'cadillac/serper01/2026cadillacserper01right',
+  'bottas':      'cadillac/valbot01/2026cadillacvalbot01right',
+};
+
 function getDriverImageUrl(driver) {
-  const lastName = driver.name.split(' ').pop().toUpperCase().slice(0, 3);
-  const firstName = driver.name.split(' ')[0].slice(0, 3).toUpperCase();
-  // F1 CDN pattern — fallback to placeholder
-  return `https://media.formula1.com/d_driver_fallback_image.png/content/dam/fom-website/drivers/2025Drivers/${driver.id}.png`;
+  const path = DRIVER_IMAGE_MAP[driver.id];
+  if (path) {
+    return `https://media.formula1.com/image/upload/c_lfill,w_440/q_auto/d_common:f1:2026:fallback:driver:2026fallbackdriverright.webp/v1740000000/common/f1/2026/${path}.webp`;
+  }
+  return '';
 }
 
 // Team logo URL

@@ -286,6 +286,13 @@
     }
   });
 
+  // --- Force refresh ---
+  document.getElementById('btnForceRefresh').addEventListener('click', () => {
+    // Clear in-memory cache without deleting persisted state
+    localStorage.removeItem('blc_last_reload');
+    location.reload(true);
+  });
+
   // --- Change player ---
   document.getElementById('btnChangePlayer').addEventListener('click', () => {
     sessionStorage.removeItem('blc_player');
