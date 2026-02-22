@@ -11,10 +11,10 @@
     <div class="header-inner">
       <h1><span class="accent">Banana</span> Leclerc <span class="subtitle">Challenge 2026</span></h1>
       <nav class="nav">
-        <a href="index.html" class="active">Inicio</a>
-        <a href="predicciones.html">Predicciones</a>
-        <a href="clasificacion.html">Clasificación</a>
-        <a href="reglas.html">Reglas</a>
+        <a href="index.html" class="active">Start</a>
+        <a href="predicciones.html">Prediction</a>
+        <a href="clasificacion.html">Rank</a>
+        <a href="reglas.html">Help</a>
         <a href="admin.html">Admin</a>
       </nav>
     </div>
@@ -43,10 +43,9 @@
       <p class="text-secondary mb-2 mt-1" style="font-size:0.85rem">Temporada 2026. 24 carreras. 4 fases. 0 excusas.</p>
       <div class="flex justify-center gap-1" style="flex-wrap:wrap; gap:0.5rem;">
         <a href="predicciones.html" class="btn btn-primary">Mis predicciones</a>
-        <a href="clasificacion.html" class="btn btn-secondary">Clasificación</a>
+        <a href="clasificacion.html" class="btn btn-secondary">Rank</a>
       </div>
       <div class="mt-2">
-        <button class="btn btn-secondary btn-small" id="btnChangePlayer">Cambiar jugador</button>
         <button class="btn-avatar-edit-inline" id="btnChangeAvatar" title="Cambiar avatar">Cambiar avatar</button>
       </div>
     </div>
@@ -116,12 +115,6 @@
       }
     }
 
-    // --- Change player ---
-    document.getElementById('btnChangePlayer').addEventListener('click', () => {
-      selectedPlayer = null;
-      sessionStorage.removeItem('blc_player');
-      renderView();
-    });
 
     // --- Save status ---
     document.getElementById('btnSaveStatus').addEventListener('click', async () => {

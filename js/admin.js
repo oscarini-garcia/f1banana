@@ -286,6 +286,12 @@
     }
   });
 
+  // --- Change player ---
+  document.getElementById('btnChangePlayer').addEventListener('click', () => {
+    sessionStorage.removeItem('blc_player');
+    window.location.href = 'index.html';
+  });
+
   // --- Dev tools ---
   document.getElementById('btnResetAll').addEventListener('click', () => {
     if (confirm('¿Borrar TODOS los datos locales? Esto no se puede deshacer.')) {
