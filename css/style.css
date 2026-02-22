@@ -1238,8 +1238,9 @@ body {
   height: 44px;
   object-fit: contain;
   flex-shrink: 0;
-  padding: 0;
+  padding: 4px 8px;
   margin: 0;
+  border-radius: var(--radius);
 }
 
 .team-logo-sm {
@@ -1247,8 +1248,9 @@ body {
   height: 32px;
   object-fit: contain;
   flex-shrink: 0;
-  padding: 0;
+  padding: 3px 6px;
   margin: 0;
+  border-radius: var(--radius);
 }
 
 /* Fallback badges also larger */

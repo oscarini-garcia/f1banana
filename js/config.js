@@ -316,7 +316,7 @@ function renderTeamBadge(teamId, size) {
   const cls = size === 'sm' ? 'team-logo-sm' : 'team-logo';
   const fallbackCls = size === 'sm' ? 'team-badge-sm' : 'team-badge';
   if (team.logo) {
-    return `<img src="${team.logo}" alt="${team.abbr}" class="${cls}" onerror="this.outerHTML='<span class=\\'${fallbackCls}\\' style=\\'background:${team.color}\\'>${team.abbr}</span>'">`;
+    return `<img src="${team.logo}" alt="${team.abbr}" class="${cls}" style="background:${team.color}" onerror="this.outerHTML='<span class=\\'${fallbackCls}\\' style=\\'background:${team.color}\\'>${team.abbr}</span>'">`;
   }
   return `<span class="${fallbackCls}" style="background:${team.color}">${team.abbr}</span>`;
 }
