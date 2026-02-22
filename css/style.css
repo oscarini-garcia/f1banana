@@ -795,6 +795,7 @@ textarea:focus, input:focus, select:focus {
   line-height: 1;
 }
 
+.avatar-emoji.avatar-xxl { font-size: 6rem; }
 .avatar-emoji.avatar-xl { font-size: 4rem; }
 .avatar-emoji.avatar-lg { font-size: 2.5rem; }
 .avatar-emoji.avatar-md { font-size: 1.6rem; }
@@ -807,6 +808,7 @@ textarea:focus, input:focus, select:focus {
   border: 3px solid var(--border-light);
 }
 
+.avatar-img.avatar-xxl { width: 140px; height: 140px; }
 .avatar-img.avatar-xl { width: 88px; height: 88px; }
 .avatar-img.avatar-lg { width: 56px; height: 56px; }
 .avatar-img.avatar-md { width: 36px; height: 36px; }
@@ -852,6 +854,25 @@ textarea:focus, input:focus, select:focus {
 
 .btn-avatar-edit-inline:hover {
   color: var(--banana);
+}
+
+/* Lightbox for avatar images */
+.avatar-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  backdrop-filter: blur(6px);
+  cursor: zoom-out;
+}
+.avatar-lightbox img {
+  max-width: 85vw;
+  max-height: 85vh;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
 }
 
 .avatar-modal-overlay {

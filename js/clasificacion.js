@@ -256,7 +256,7 @@
     let html = `
       <div class="player-tab-header">
         <div>
-          ${renderAvatar(selectedPlayerId, 'avatar-sm')} <span style="font-weight:700; font-size:0.9rem;">${player.name}</span>${renderPlayerStatus(selectedPlayerId)}
+          ${renderAvatar(selectedPlayerId, 'avatar-lg')} <span style="font-weight:700; font-size:0.9rem;">${player.name}</span>${renderPlayerStatus(selectedPlayerId)}
           <span class="player-tab-total-label" style="margin-left:0.5rem;">Total</span>
         </div>
         <div class="player-tab-total">${s.total} pts</div>

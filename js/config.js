@@ -244,9 +244,20 @@ function isAvatarImage(avatar) {
 function renderAvatar(playerId, sizeClass) {
   const avatar = getPlayerAvatar(playerId);
   if (isAvatarImage(avatar)) {
-    return `<img src="${avatar}" alt="avatar" class="avatar-img ${sizeClass || ''}">`;
+    return `<img src="${avatar}" alt="avatar" class="avatar-img ${sizeClass || ''}" onclick="openAvatarLightbox(this.src)" style="cursor:zoom-in">`;
   }
   return `<span class="avatar-emoji ${sizeClass || ''}">${avatar}</span>`;
+}
+
+function openAvatarLightbox(src) {
+  const existing = document.getElementById('avatarLightbox');
+  if (existing) existing.remove();
+  const lb = document.createElement('div');
+  lb.id = 'avatarLightbox';
+  lb.className = 'avatar-lightbox';
+  lb.innerHTML = `<img src="${src}" alt="avatar">`;
+  lb.addEventListener('click', () => lb.remove());
+  document.body.appendChild(lb);
 }
 
 function resizeImage(file, maxSize, callback) {

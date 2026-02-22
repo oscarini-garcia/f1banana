@@ -103,7 +103,7 @@
         welcomeCard.classList.remove('hidden');
 
         const player = CONFIG.PLAYERS.find(p => p.id === selectedPlayer);
-        document.getElementById('welcomeAvatar').innerHTML = renderAvatar(selectedPlayer, 'avatar-xl');
+        document.getElementById('welcomeAvatar').innerHTML = renderAvatar(selectedPlayer, 'avatar-xxl');
         const status = getPlayerStatus(selectedPlayer);
         document.getElementById('welcomeName').innerHTML = `¡Hola, ${player.name}!` +
           (status ? `<span class="welcome-status"> — ${status}</span>` : '');
