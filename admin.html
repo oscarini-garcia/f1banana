@@ -21,6 +21,13 @@
   </div>
 
   <div class="container">
+    <!-- Forzar refresco (sin autenticación) -->
+    <div class="card">
+      <h2>Forzar Refresco</h2>
+      <p class="text-secondary mb-2" style="font-size:0.8rem">Limpia la caché y recarga todos los datos del servidor. No borra el estado guardado.</p>
+      <button class="btn btn-secondary btn-small" id="btnForceRefresh">Forzar refresco</button>
+    </div>
+
     <!-- PIN gate -->
     <div class="card" id="pinGate">
       <h2>Panel de Administración</h2>
@@ -93,13 +100,6 @@
         <button class="btn btn-primary mt-2" id="btnSaveUnlocks">Guardar desbloqueos</button>
       </div>
 
-      <!-- Forzar refresco -->
-      <div class="card">
-        <h2>Forzar Refresco</h2>
-        <p class="text-secondary mb-2" style="font-size:0.8rem">Limpia la caché y recarga todos los datos del servidor. No borra el estado guardado.</p>
-        <button class="btn btn-secondary btn-small" id="btnForceRefresh">Forzar refresco</button>
-      </div>
-
       <!-- Cambiar jugador -->
       <div class="card">
         <h2>Cambiar Jugador</h2>
@@ -117,7 +117,7 @@
   </div>
 
   <div class="footer">
-    Banana Leclerc Challenge 2026 · Hecho con plátanos y sufrimiento familiar
+    Banana Leclerc Challenge 2026 · Hecho con plátanos y sufrimiento familiar · <span class="build-time"></span>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -129,6 +129,12 @@
 
   <script src="js/config.js"></script>
   <script src="js/storage.js"></script>
+  <script>
+    document.getElementById('btnForceRefresh').addEventListener('click', () => {
+      localStorage.removeItem('blc_last_reload');
+      location.reload(true);
+    });
+  </script>
   <script src="js/admin.js"></script>
   <script>
     (function(){

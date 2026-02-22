@@ -17,7 +17,19 @@
       "Bash(which gh && gh auth status 2>&1)",
       "Bash(brew install:*)",
       "Bash(gh auth:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(cd \"/Users/oscar.garcia/Library/CloudStorage/OneDrive-NTTLtd/Documents/Oscar2025/f1banana\" && gh repo create f1banana --public --source=. --push 2>&1)",
+      "Bash(gh api repos/oscarini-garcia/f1banana/pages -X POST -f \"build_type=workflow\" -f \"source[branch]=main\" -f \"source[path]=/\" 2>&1 || gh api repos/oscarini-garcia/f1banana/pages -X POST -f \"source[branch]=main\" -f \"source[path]=/\" 2>&1)",
+      "Bash(cd \"/Users/oscar.garcia/Library/CloudStorage/OneDrive-NTTLtd/Documents/Oscar2025/f1banana\" && git push 2>&1)",
+      "Bash(gh api:*)",
+      "Bash(curl:*)",
+      "Bash(cd \"/Users/oscar.garcia/Library/CloudStorage/OneDrive-NTTLtd/Documents/Oscar2025/f1banana\" && git add js/config.js && git commit -m \"Connect to JSONBin.io backend, disable dev mode\" && git push 2>&1)",
+      "Bash(cd \"/Users/oscar.garcia/Library/CloudStorage/OneDrive-NTTLtd/Documents/Oscar2025/f1banana\" && git add js/clasificacion.js css/style.css && git commit -m \"Leaderboard as mobile-friendly cards, add avatar-md size\" && git push 2>&1)",
+      "Bash(cd \"/Users/oscar.garcia/Library/CloudStorage/OneDrive-NTTLtd/Documents/Oscar2025/f1banana\" && git add js/clasificacion.js && git commit -m \"Show only name in player breakdown tabs\" && git push 2>&1)",
+      "Bash(cd \"/Users/oscar.garcia/Library/CloudStorage/OneDrive-NTTLtd/Documents/Oscar2025/f1banana\" && git add index.html predicciones.html clasificacion.html reglas.html admin.html js/config.js js/admin.js && git commit -m \"Rename nav menu, funnier ticker messages, move change player to admin\" && git push 2>&1)",
+      "Bash(cd \"/Users/oscar.garcia/Library/CloudStorage/OneDrive-NTTLtd/Documents/Oscar2025/f1banana\" && git add css/style.css js/config.js js/clasificacion.js index.html && git commit -m \"Bigger avatars on Start, avatar lightbox on click, avatar in rank breakdown\" && git push 2>&1)",
+      "Bash(cd \"/Users/oscar.garcia/Library/CloudStorage/OneDrive-NTTLtd/Documents/Oscar2025/f1banana\" && git add js/config.js js/admin.js admin.html && git commit -m \"Update 2026 grid \\(22 drivers, 11 teams\\), F1 CDN images, force refresh button\" && git push 2>&1)",
+      "Bash(cd \"/Users/oscar.garcia/Library/CloudStorage/OneDrive-NTTLtd/Documents/Oscar2025/f1banana\" && git add predicciones.html && git commit -m \"Remove change player button from predictions\" && git push 2>&1)"
     ]
   }
 }

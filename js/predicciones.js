@@ -3,7 +3,7 @@
 // ============================================================
 
 (function () {
-  const playerId = sessionStorage.getItem('blc_player');
+  const playerId = getSessionPlayer();
   if (!playerId) {
     window.location.href = 'index.html';
     return;

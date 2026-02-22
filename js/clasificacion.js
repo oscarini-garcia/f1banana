@@ -297,7 +297,7 @@
 
     // Show predictions detail
     const pd = allPlayerData[selectedPlayerId];
-    const currentUser = sessionStorage.getItem('blc_player');
+    const currentUser = getSessionPlayer();
     if (pd) {
       html += `<div class="mt-2" style="font-size:0.85rem">`;
       // Órdago: solo visible para el propio jugador

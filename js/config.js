@@ -388,6 +388,32 @@ const F1_TICKER_MESSAGES = [
   'Doohan intentando mantener su asiento en Alpine como tú intentas mantener tus predicciones: con fe ciega y cero evidencia.',
 ];
 
+// --- Build timestamp (updated on each deploy) ---
+const BUILD_TIME = '22-02-2026 18:17';
+
+// --- Show build time in footer ---
+document.querySelectorAll('.build-time').forEach(el => {
+  el.textContent = BUILD_TIME === '22-02-2026 18:17' ? 'dev' : BUILD_TIME;
+});
+
+// --- Session via cookie (persists across browser restarts) ---
+function getSessionPlayer() {
+  const match = document.cookie.match(/(?:^|; )blc_player=([^;]*)/);
+  if (match) return decodeURIComponent(match[1]);
+  // Migrate from sessionStorage if exists
+  const ss = sessionStorage.getItem('blc_player');
+  if (ss) { setSessionPlayer(ss); return ss; }
+  return null;
+}
+function setSessionPlayer(playerId) {
+  document.cookie = `blc_player=${encodeURIComponent(playerId)};path=/;max-age=${60*60*24*365};SameSite=Lax`;
+  sessionStorage.setItem('blc_player', playerId); // keep in sync
+}
+function clearSessionPlayer() {
+  document.cookie = 'blc_player=;path=/;max-age=0';
+  sessionStorage.removeItem('blc_player');
+}
+
 // --- Daily reload: force one refresh per day to pick up changes ---
 (function dailyReload() {
   const key = 'blc_last_reload';
