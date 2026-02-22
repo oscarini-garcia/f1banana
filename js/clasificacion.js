@@ -231,7 +231,7 @@
 
     container.innerHTML = CONFIG.PLAYERS.map(p => `
       <button class="phase-tab ${p.id === selectedPlayerId ? 'active' : ''}" data-player="${p.id}">
-        ${renderAvatar(p.id, 'avatar-sm')} ${p.name}${renderPlayerStatus(p.id)}
+        ${p.name}
       </button>
     `).join('');
 
