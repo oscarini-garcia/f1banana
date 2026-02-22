@@ -196,41 +196,31 @@
       score: scores[p.id],
     })).sort((a, b) => b.score.total - a.score.total);
 
-    const html = `
-      <table class="leaderboard">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Jugador</th>
-            <th>Fases</th>
-            <th>Evento</th>
-            <th>Órdago</th>
-            <th>Bonos</th>
-            <th>Penal.</th>
-            <th style="text-align:right">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${sorted.map((p, i) => {
-            const s = p.score;
-            const phaseTotal = Object.values(s.phases).reduce((sum, ph) => sum + ph.subtotal, 0);
-            const bonusTotal = s.bonuses.collective + s.bonuses.special;
-            return `
-              <tr>
-                <td class="rank rank-${i + 1}">${i + 1}</td>
-                <td class="flex items-center gap-1">${renderAvatar(p.id, 'avatar-sm')} ${p.name}${renderPlayerStatus(p.id)}</td>
-                <td>${phaseTotal}</td>
-                <td>${s.evento}</td>
-                <td>${s.ordago}</td>
-                <td class="text-green">${bonusTotal > 0 ? '+' + bonusTotal : bonusTotal}</td>
-                <td class="${s.penalties < 0 ? 'text-red' : ''}">${s.penalties}</td>
-                <td class="points">${s.total}</td>
-              </tr>
-            `;
-          }).join('')}
-        </tbody>
-      </table>
-    `;
+    const html = sorted.map((p, i) => {
+      const s = p.score;
+      const phaseTotal = Object.values(s.phases).reduce((sum, ph) => sum + ph.subtotal, 0);
+      const bonusTotal = s.bonuses.collective + s.bonuses.special;
+      return `
+        <div class="lb-card lb-rank-${i + 1}">
+          <div class="lb-header">
+            <span class="lb-pos">${i + 1}</span>
+            <div class="lb-avatar">${renderAvatar(p.id, 'avatar-md')}</div>
+            <div class="lb-name-wrap">
+              <span class="lb-name">${p.name}</span>
+              ${getPlayerStatus(p.id) ? `<span class="lb-status"> — ${getPlayerStatus(p.id)}</span>` : ''}
+            </div>
+            <span class="lb-total">${s.total}</span>
+          </div>
+          <div class="lb-details">
+            <div class="lb-stat"><span class="lb-label">Fases</span><span>${phaseTotal}</span></div>
+            <div class="lb-stat"><span class="lb-label">Evento</span><span>${s.evento}</span></div>
+            <div class="lb-stat"><span class="lb-label">Órdago</span><span>${s.ordago}</span></div>
+            <div class="lb-stat"><span class="lb-label">Bonos</span><span class="text-green">${bonusTotal > 0 ? '+' + bonusTotal : bonusTotal}</span></div>
+            <div class="lb-stat"><span class="lb-label">Penal.</span><span class="${s.penalties < 0 ? 'text-red' : ''}">${s.penalties}</span></div>
+          </div>
+        </div>
+      `;
+    }).join('');
 
     document.getElementById('leaderboard').innerHTML = html;
   }
