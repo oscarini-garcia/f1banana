@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:jsonbin.io)",
+      "WebFetch(domain:jsonblob.com)",
+      "WebFetch(domain:www.npoint.io)",
+      "WebFetch(domain:www.the-race.com)",
+      "WebFetch(domain:www.racefans.net)",
+      "WebFetch(domain:www.formula1.com)",
+      "WebFetch(domain:documenter.getpostman.com)",
+      "WebFetch(domain:extendsclass.com)",
+      "Bash(open:*)",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(head:*)",
+      "Bash(which gh && gh auth status 2>&1)",
+      "Bash(brew install:*)",
+      "Bash(gh auth:*)",
+      "Bash(cd:*)"
+    ]
+  }
+}

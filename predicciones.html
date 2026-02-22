@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Predicciones · Banana Leclerc 2026</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-inner">
+      <h1><span class="accent">Banana</span> Leclerc <span class="subtitle">Challenge 2026</span></h1>
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="predicciones.html" class="active">Predicciones</a>
+        <a href="clasificacion.html">Clasificación</a>
+        <a href="reglas.html">Reglas</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-yellow" id="playerTitle">Cargando...</h2>
+      <a href="index.html" class="btn btn-secondary btn-small">Cambiar jugador</a>
+    </div>
+
+    <!-- Phase tabs -->
+    <div class="phase-tabs" id="phaseTabs"></div>
+
+    <!-- Lock banner -->
+    <div class="lock-banner hidden" id="lockBanner">
+      <span class="lock-icon">🔒</span>
+      <span>Esta fase está cerrada. Las predicciones no se pueden modificar.</span>
+    </div>
+
+    <!-- Top 5 Drivers -->
+    <div class="card" id="driversCard">
+      <h2>Top 5 Pilotos</h2>
+      <p class="text-secondary mb-2" style="font-size:0.8rem">Selecciona 5 pilotos en orden. 1.º = más puntos.</p>
+      <div class="dropdown-list" id="selectedDrivers"></div>
+    </div>
+
+    <!-- Top 3 Constructors -->
+    <div class="card" id="constructorsCard">
+      <h2>Top 3 Constructores</h2>
+      <p class="text-secondary mb-2" style="font-size:0.8rem">Selecciona 3 equipos en orden.</p>
+      <div class="dropdown-list" id="selectedConstructors"></div>
+    </div>
+
+    <!-- Evento -->
+    <div class="card">
+      <h2>Evento de Fase</h2>
+      <p class="text-secondary mb-1" style="font-size:0.8rem">Predicción concreta y medible. Ej: <em>"Verstappen gana 4 de 6"</em>, <em>"Hamilton abandona 2 veces"</em>.</p>
+      <textarea id="eventoInput" rows="3" placeholder="Escribe tu evento aquí..."></textarea>
+    </div>
+
+    <!-- Órdago (solo fase 1) -->
+    <div class="card" id="ordagoCard">
+      <h2>Órdago</h2>
+      <p class="text-secondary mb-1" style="font-size:0.8rem">Predicción audaz para TODA la temporada. Una sola vez, antes de Australia. No se puede cambiar. <em>Arriésgate o vete a casa.</em></p>
+      <textarea id="ordagoInput" rows="3" placeholder="Escribe tu órdago aquí..."></textarea>
+    </div>
+
+    <!-- Save -->
+    <div class="text-center mt-2">
+      <button class="btn btn-primary" id="btnSave" style="padding: 0.75rem 2.5rem;">
+        Guardar predicciones
+      </button>
+      <p class="text-muted mt-1" id="saveStatus" style="font-size:0.75rem"></p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Banana Leclerc Challenge 2026 · Hecho con plátanos y sufrimiento familiar
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="ticker-bar" id="tickerBar">
+    <div class="ticker-label">F1</div>
+    <div class="ticker-track"><div class="ticker-content" id="tickerContent"></div></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/predicciones.js"></script>
+  <script>
+    (function(){
+      const msgs = [...F1_TICKER_MESSAGES].sort(() => Math.random() - 0.5);
+      const sep = '   ●   ', text = msgs.join(sep) + sep;
+      const el = document.getElementById('tickerContent');
+      el.innerHTML = '<span>'+text+'</span><span>'+text+'</span>';
+      el.style.setProperty('--ticker-duration', Math.max(text.length * 0.15, 60) + 's');
+    })();
+  </script>
+</body>
+</html>

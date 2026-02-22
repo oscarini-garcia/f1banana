@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🍌 Banana Leclerc Challenge 2026</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-inner">
+      <h1><span class="accent">Banana</span> Leclerc <span class="subtitle">Challenge 2026</span></h1>
+      <nav class="nav">
+        <a href="index.html" class="active">Inicio</a>
+        <a href="predicciones.html">Predicciones</a>
+        <a href="clasificacion.html">Clasificación</a>
+        <a href="reglas.html">Reglas</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Vista: usuario NO logado -->
+    <div class="card text-center" id="loginCard">
+      <h2>Introduce tu código</h2>
+      <p class="text-secondary mb-2" style="font-size:0.85rem">Cada jugador tiene un código secreto de 4 dígitos. <em>No lo compartas, que lo ve Leclerc.</em></p>
+      <input type="password" inputmode="numeric" maxlength="4" id="codeInput" placeholder="****" style="max-width:120px; text-align:center; font-size:1.5rem; letter-spacing:0.5rem;">
+      <div class="mt-2">
+        <button class="btn btn-primary" id="btnEntrar">Entrar</button>
+      </div>
+      <p class="text-red mt-1 hidden" id="codeError" style="font-size:0.8rem">Código incorrecto. Inténtalo de nuevo, bananero.</p>
+    </div>
+
+    <!-- Vista: usuario logado -->
+    <div class="card text-center hidden" id="welcomeCard">
+      <div class="welcome-avatar welcome-avatar-clickable" id="welcomeAvatar" title="Cambiar avatar"></div>
+      <h2 id="welcomeName"></h2>
+      <div class="status-edit-wrap" style="justify-content:center">
+        <input type="text" class="status-input" id="statusInput" placeholder="¿Cómo te sientes? Escribe tu estado..." maxlength="60">
+        <button class="btn btn-secondary btn-small" id="btnSaveStatus">OK</button>
+      </div>
+      <p class="text-secondary mb-2 mt-1" style="font-size:0.85rem">Temporada 2026. 24 carreras. 4 fases. 0 excusas.</p>
+      <div class="flex justify-center gap-1" style="flex-wrap:wrap; gap:0.5rem;">
+        <a href="predicciones.html" class="btn btn-primary">Mis predicciones</a>
+        <a href="clasificacion.html" class="btn btn-secondary">Clasificación</a>
+      </div>
+      <div class="mt-2">
+        <button class="btn btn-secondary btn-small" id="btnChangePlayer">Cambiar jugador</button>
+        <button class="btn-avatar-edit-inline" id="btnChangeAvatar" title="Cambiar avatar">Cambiar avatar</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Próximas carreras</h2>
+      <div id="nextRaces"></div>
+    </div>
+
+    <!-- Eventos de fase (públicos) -->
+    <div class="card" id="eventosCard">
+      <h2>Eventos de Fase</h2>
+      <p class="text-secondary mb-2" style="font-size:0.8rem">Las apuestas de cada jugador para la fase activa. Esto es público, bananeros.</p>
+      <div class="phase-tabs" id="eventoPhaseTabs"></div>
+      <div id="eventosGrid"></div>
+    </div>
+
+    <div class="racing-stripe"></div>
+  </div>
+
+  <div class="footer">
+    Banana Leclerc Challenge 2026 · Hecho con plátanos y sufrimiento familiar
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Ticker bar -->
+  <div class="ticker-bar" id="tickerBar">
+    <div class="ticker-label">F1</div>
+    <div class="ticker-track"><div class="ticker-content" id="tickerContent"></div></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script>
+    // --- Toast ---
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // --- State ---
+    let selectedPlayer = sessionStorage.getItem('blc_player') || null;
+
+    // --- Render correct view (call after loadAvatars) ---
+    function renderView() {
+      const loginCard = document.getElementById('loginCard');
+      const welcomeCard = document.getElementById('welcomeCard');
+
+      if (selectedPlayer) {
+        // Logged in → show welcome
+        loginCard.classList.add('hidden');
+        welcomeCard.classList.remove('hidden');
+
+        const player = CONFIG.PLAYERS.find(p => p.id === selectedPlayer);
+        document.getElementById('welcomeAvatar').innerHTML = renderAvatar(selectedPlayer, 'avatar-xl');
+        const status = getPlayerStatus(selectedPlayer);
+        document.getElementById('welcomeName').innerHTML = `¡Hola, ${player.name}!` +
+          (status ? `<span class="welcome-status"> — ${status}</span>` : '');
+        document.getElementById('statusInput').value = getPlayerStatus(selectedPlayer);
+      } else {
+        // Not logged in → show code input
+        loginCard.classList.remove('hidden');
+        welcomeCard.classList.add('hidden');
+      }
+    }
+
+    // --- Change player ---
+    document.getElementById('btnChangePlayer').addEventListener('click', () => {
+      selectedPlayer = null;
+      sessionStorage.removeItem('blc_player');
+      renderView();
+    });
+
+    // --- Save status ---
+    document.getElementById('btnSaveStatus').addEventListener('click', async () => {
+      if (!selectedPlayer) return;
+      const val = document.getElementById('statusInput').value.trim();
+      await setPlayerStatus(selectedPlayer, val);
+      renderView();
+      showToast('Estado actualizado');
+    });
+    document.getElementById('statusInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('btnSaveStatus').click();
+    });
+
+    // --- Change avatar (from welcome view) ---
+    document.getElementById('btnChangeAvatar').addEventListener('click', () => {
+      openAvatarPicker(selectedPlayer);
+    });
+    document.getElementById('welcomeAvatar').addEventListener('click', () => {
+      if (selectedPlayer) openAvatarPicker(selectedPlayer);
+    });
+
+    // --- Enter game (code login) ---
+    document.getElementById('btnEntrar').addEventListener('click', () => {
+      const code = document.getElementById('codeInput').value.trim();
+      const player = CONFIG.PLAYERS.find(p => p.code === code);
+      if (player) {
+        selectedPlayer = player.id;
+        sessionStorage.setItem('blc_player', selectedPlayer);
+        document.getElementById('codeError').classList.add('hidden');
+        renderView();
+      } else {
+        document.getElementById('codeError').classList.remove('hidden');
+      }
+    });
+    document.getElementById('codeInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('btnEntrar').click();
+    });
+
+    // --- Avatar picker modal ---
+    function openAvatarPicker(playerId) {
+      const existing = document.getElementById('avatarModal');
+      if (existing) existing.remove();
+
+      const current = getPlayerAvatar(playerId);
+      const player = CONFIG.PLAYERS.find(p => p.id === playerId);
+
+      const modal = document.createElement('div');
+      modal.id = 'avatarModal';
+      modal.className = 'avatar-modal-overlay';
+      modal.innerHTML = `
+        <div class="avatar-modal">
+          <h3>Avatar de ${player.name}</h3>
+          <div class="avatar-preview-wrap mt-1 mb-2 text-center">
+            ${renderAvatar(playerId, 'avatar-preview')}
+          </div>
+          <p class="text-muted mb-1" style="font-size:0.8rem">Sube una foto:</p>
+          <label class="btn btn-secondary btn-small avatar-upload-label">
+            📷 Elegir imagen
+            <input type="file" accept="image/*" id="avatarFileInput" style="display:none">
+          </label>
+          <p class="text-muted mt-2 mb-1" style="font-size:0.8rem">O elige un emoji:</p>
+          <div class="avatar-grid">
+            ${AVATAR_EMOJIS.map(e => `
+              <button class="avatar-option ${!isAvatarImage(current) && e === current ? 'active' : ''}" data-emoji="${e}">${e}</button>
+            `).join('')}
+          </div>
+          <div class="mt-2 text-center">
+            <button class="btn btn-secondary btn-small" id="btnCloseAvatar">Cerrar</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      modal.querySelector('#btnCloseAvatar').addEventListener('click', () => modal.remove());
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+      });
+
+      modal.querySelectorAll('.avatar-option').forEach(opt => {
+        opt.addEventListener('click', async () => {
+          await setPlayerAvatar(playerId, opt.dataset.emoji);
+          modal.remove();
+          renderView();
+        });
+      });
+
+      modal.querySelector('#avatarFileInput').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        resizeImage(file, 128, async (dataUrl) => {
+          await setPlayerAvatar(playerId, dataUrl);
+          modal.remove();
+          renderView();
+        });
+      });
+    }
+
+    // --- Next 4 races ---
+    function renderNextRaces() {
+      const today = new Date().toISOString().slice(0, 10);
+      const upcoming = CONFIG.RACES.filter(r => r.date >= today).slice(0, 4);
+      const el = document.getElementById('nextRaces');
+      if (upcoming.length === 0) {
+        el.innerHTML = '<p class="text-muted">Temporada finalizada</p>';
+        return;
+      }
+      el.innerHTML = upcoming.map((race, i) => {
+        const date = new Date(race.date + 'T00:00:00');
+        const formatted = date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
+        const isNext = i === 0;
+        return `
+          <div class="race-row ${isNext ? 'race-next' : ''}">
+            <div class="race-round">${race.flag || ''}</div>
+            <div class="race-info">
+              <span class="race-name">${race.name}</span>
+              <span class="race-date">R${race.round} · ${formatted}</span>
+            </div>
+            <span class="badge ${isNext ? 'badge-warning' : 'badge-success'}">Fase ${getPhaseForRound(race.round)}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // --- Eventos de fase (públicos) ---
+    let eventoPhase = getCurrentPhase();
+
+    function renderEventoPhaseTabs() {
+      const container = document.getElementById('eventoPhaseTabs');
+      container.innerHTML = CONFIG.PHASES.map(p => `
+        <button class="phase-tab ${p.id === eventoPhase ? 'active' : ''}" data-phase="${p.id}">
+          ${p.label}
+        </button>
+      `).join('');
+      container.querySelectorAll('.phase-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          eventoPhase = parseInt(btn.dataset.phase);
+          renderEventoPhaseTabs();
+          renderEventos();
+        });
+      });
+    }
+
+    async function renderEventos() {
+      const allPlayerData = await Storage.getAllPlayerData();
+      const globalData = await Storage.getGlobalData();
+      const phaseKey = `phase${eventoPhase}`;
+      const grid = document.getElementById('eventosGrid');
+
+      let html = '';
+      for (const p of CONFIG.PLAYERS) {
+        const pd = allPlayerData[p.id];
+        const evento = pd && pd[phaseKey] ? pd[phaseKey].evento : '';
+        const isValidated = globalData.eventos &&
+          globalData.eventos[phaseKey] &&
+          globalData.eventos[phaseKey][p.id];
+
+        html += `
+          <div class="evento-card">
+            <div class="evento-header">
+              ${renderAvatar(p.id, 'avatar-sm')}
+              <strong>${p.name}</strong>${renderPlayerStatus(p.id)}
+              ${isValidated ? '<span class="badge badge-success" style="margin-left:auto">Acertado</span>' : ''}
+            </div>
+            <p class="evento-text">${evento || '<em class="text-muted">Sin evento todavía</em>'}</p>
+          </div>
+        `;
+      }
+
+      grid.innerHTML = html;
+    }
+
+    // --- Ticker ---
+    function initTicker() {
+      const msgs = [...F1_TICKER_MESSAGES].sort(() => Math.random() - 0.5);
+      const sep = '   ●   ';
+      const text = msgs.join(sep) + sep;
+      const content = document.getElementById('tickerContent');
+      // Duplicate the text so the scroll loops seamlessly
+      content.innerHTML = `<span>${text}</span><span>${text}</span>`;
+      // Adjust speed based on content width
+      const charCount = text.length;
+      content.style.setProperty('--ticker-duration', Math.max(charCount * 0.15, 60) + 's');
+    }
+
+    // --- Init (async: load avatars first) ---
+    (async function() {
+      await loadAvatars();
+      renderView();
+      renderNextRaces();
+      renderEventoPhaseTabs();
+      await renderEventos();
+      initTicker();
+    })();
+  </script>
+</body>
+</html>

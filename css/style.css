@@ -1,0 +1,1632 @@
+/* ============================================================
+   Banana Leclerc Challenge 2026
+   F1 Official-inspired dark theme · banana accent
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  /* F1 palette */
+  --bg-primary: #111111;
+  --bg-secondary: #1b1b1b;
+  --bg-card: #1e1e1e;
+  --bg-elevated: #262626;
+  --bg-input: #1a1a1a;
+
+  /* Accent colors */
+  --f1-red: #E10600;
+  --banana: #FFD700;
+  --banana-dim: #c8a800;
+  --green: #00D2BE;       /* Mercedes teal for success */
+  --white: #ffffff;
+  --text: #e8e8e8;
+  --text-secondary: #999999;
+  --text-muted: #666666;
+
+  --border: #333333;
+  --border-light: #444444;
+  --radius: 4px;
+  --radius-lg: 8px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   HEADER — F1-style top bar with red stripe
+   ============================================================ */
+
+.header {
+  background: var(--bg-secondary);
+  border-top: 4px solid var(--f1-red);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.header h1 {
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--white);
+  white-space: nowrap;
+}
+
+.header h1 .accent {
+  color: var(--banana);
+}
+
+.header h1 .subtitle {
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.nav {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+  border-bottom: 2px solid transparent;
+}
+
+.nav a:hover {
+  color: var(--white);
+}
+
+.nav a.active {
+  color: var(--white);
+  border-bottom-color: var(--f1-red);
+}
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+/* ============================================================
+   CARDS — Sharp, clean panels
+   ============================================================ */
+
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: visible;
+}
+
+/* Red top accent stripe on cards */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--f1-red) 0%, var(--f1-red) 30%, transparent 100%);
+}
+
+.card h2 {
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card h3 {
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+
+/* ============================================================
+   BUTTONS — F1 style: sharp, bold
+   ============================================================ */
+
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  text-align: center;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--f1-red);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: #ff1a0e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(225, 6, 0, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border-light);
+}
+
+.btn-secondary:hover {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+.btn-banana {
+  background: var(--banana);
+  color: #111;
+}
+
+.btn-banana:hover {
+  background: #ffe44d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+}
+
+.btn-danger {
+  background: var(--f1-red);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #ff1a0e;
+}
+
+.btn-small {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.7rem;
+}
+
+.btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ============================================================
+   PLAYER SELECT — Grid cards
+   ============================================================ */
+
+.player-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.player-card {
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.player-card:hover {
+  border-color: var(--border-light);
+  background: #2a2a2a;
+}
+
+.player-card.selected {
+  border-color: var(--f1-red);
+  background: rgba(225, 6, 0, 0.08);
+  box-shadow: 0 0 0 1px var(--f1-red);
+}
+
+.player-card .name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   WELCOME CARD (logged-in view)
+   ============================================================ */
+
+.welcome-avatar {
+  margin-bottom: 0.75rem;
+}
+.welcome-avatar-clickable {
+  cursor: pointer;
+  position: relative;
+}
+.welcome-avatar-clickable:hover {
+  opacity: 0.8;
+}
+.welcome-status {
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--text);
+  opacity: 0.75;
+}
+
+#welcomeCard h2 {
+  border-bottom: none;
+  font-size: 1.2rem;
+  padding-bottom: 0;
+  margin-bottom: 0.25rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ============================================================
+   DRIVER / TEAM PICKER
+   ============================================================ */
+
+.picker-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.picker-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.picker-item:hover {
+  border-color: var(--border-light);
+  background: #2a2a2a;
+}
+
+.picker-item.selected {
+  border-color: var(--f1-red);
+  background: rgba(225, 6, 0, 0.06);
+}
+
+.picker-item.disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.picker-item .number {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+}
+
+.picker-item .driver-info {
+  flex: 1;
+}
+
+.picker-item .driver-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.picker-item .team-name {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.picker-item .position-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius);
+  background: var(--f1-red);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   SELECTED ORDER — F1 standings style
+   ============================================================ */
+
+.selected-order {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  min-height: 40px;
+}
+
+.selected-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--f1-red);
+}
+
+.selected-slot .pos {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--white);
+  width: 24px;
+  text-align: center;
+}
+
+.selected-slot .slot-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.selected-slot .remove-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem;
+  transition: color 0.15s;
+}
+
+.selected-slot .remove-btn:hover {
+  color: var(--f1-red);
+}
+
+.empty-slot {
+  border-left-color: var(--border);
+  color: var(--text-muted);
+  font-style: normal;
+  font-size: 0.8rem;
+}
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+
+textarea, input[type="text"], input[type="password"], input[type="number"], select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.15s;
+}
+
+textarea:focus, input:focus, select:focus {
+  outline: none;
+  border-color: var(--f1-red);
+}
+
+/* ============================================================
+   LEADERBOARD TABLE — F1 standings inspired
+   ============================================================ */
+
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard th {
+  text-align: left;
+  padding: 0.5rem 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.leaderboard td {
+  padding: 0.65rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.leaderboard tbody tr {
+  transition: background 0.1s;
+}
+
+.leaderboard tbody tr:hover {
+  background: var(--bg-elevated);
+}
+
+.leaderboard .rank {
+  font-weight: 900;
+  font-size: 1.1rem;
+  width: 36px;
+}
+
+.leaderboard .rank-1 { color: var(--banana); }
+.leaderboard .rank-2 { color: #C0C0C0; }
+.leaderboard .rank-3 { color: #CD7F32; }
+.leaderboard .rank-4 { color: var(--text-muted); }
+
+.leaderboard .points {
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   SCORE BREAKDOWN — Stat cards
+   ============================================================ */
+
+.breakdown {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.breakdown-item {
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.breakdown-item .label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+}
+
+.breakdown-item .value {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--white);
+  margin-top: 0.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.breakdown-item .value.negative {
+  color: var(--f1-red);
+}
+
+/* ============================================================
+   PHASE TABS — Segmented control
+   ============================================================ */
+
+.phase-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.phase-tab {
+  flex: 1;
+  padding: 0.5rem 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+  font-family: inherit;
+  text-align: center;
+}
+
+.phase-tab:not(:last-child) {
+  border-right: 1px solid var(--border);
+}
+
+.phase-tab:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+}
+
+.phase-tab.active {
+  color: var(--white);
+  background: var(--f1-red);
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--bg-elevated);
+  color: var(--white);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--f1-red);
+  font-weight: 600;
+  font-size: 0.85rem;
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.25s ease;
+  text-align: center;
+  max-width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.loading::after {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--f1-red);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   BADGES
+   ============================================================ */
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-success { background: rgba(0, 210, 190, 0.15); color: var(--green); }
+.badge-warning { background: rgba(255, 215, 0, 0.15); color: var(--banana); }
+.badge-danger  { background: rgba(225, 6, 0, 0.15); color: var(--f1-red); }
+
+/* ============================================================
+   ADMIN LOG
+   ============================================================ */
+
+.log-list {
+  list-style: none;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.log-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+}
+
+.log-list .log-date {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 600px) {
+  .header-inner {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  .container { padding: 1rem 0.75rem; }
+  .card { padding: 1rem; }
+  .player-grid { gap: 0.5rem; }
+  .breakdown { grid-template-columns: 1fr 1fr; }
+  .leaderboard { font-size: 0.75rem; }
+  .leaderboard td, .leaderboard th { padding: 0.4rem 0.3rem; }
+  .phase-tab { font-size: 0.65rem; padding: 0.45rem 0.25rem; }
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+.text-yellow { color: var(--banana); }
+.text-red { color: var(--f1-red); }
+.text-green { color: var(--green); }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.gap-1 { gap: 0.5rem; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.hidden { display: none !important; }
+
+/* ============================================================
+   AVATAR SYSTEM
+   ============================================================ */
+
+.player-avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.avatar-emoji {
+  display: block;
+  line-height: 1;
+}
+
+.avatar-emoji.avatar-xl { font-size: 4rem; }
+.avatar-emoji.avatar-lg { font-size: 2.5rem; }
+.avatar-emoji.avatar-sm { font-size: 1.1rem; }
+.avatar-emoji.avatar-preview { font-size: 3.5rem; }
+
+.avatar-img {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--border-light);
+}
+
+.avatar-img.avatar-xl { width: 88px; height: 88px; }
+.avatar-img.avatar-lg { width: 56px; height: 56px; }
+.avatar-img.avatar-sm { width: 22px; height: 22px; border-width: 1px; }
+.avatar-img.avatar-preview { width: 72px; height: 72px; }
+
+.avatar-preview-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-avatar-edit {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  opacity: 0.3;
+  transition: opacity 0.15s;
+  padding: 2px;
+}
+
+.btn-avatar-edit:hover {
+  opacity: 1;
+}
+
+.avatar-upload-label {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn-avatar-edit-inline {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  transition: color 0.15s;
+}
+
+.btn-avatar-edit-inline:hover {
+  color: var(--banana);
+}
+
+.avatar-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(4px);
+}
+
+.avatar-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  max-width: 340px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.avatar-modal h3 {
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.25rem;
+}
+
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.35rem;
+}
+
+.avatar-option {
+  font-size: 1.5rem;
+  background: var(--bg-elevated);
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  padding: 0.3rem;
+  cursor: pointer;
+  transition: all 0.1s;
+  text-align: center;
+}
+
+.avatar-option:hover {
+  border-color: var(--border-light);
+  background: #2a2a2a;
+}
+
+.avatar-option.active {
+  border-color: var(--f1-red);
+  background: rgba(225, 6, 0, 0.1);
+}
+
+/* ============================================================
+   RACING STRIPE — decorative element
+   ============================================================ */
+
+.racing-stripe {
+  height: 2px;
+  background: linear-gradient(90deg,
+    var(--f1-red) 0%, var(--f1-red) 40%,
+    var(--banana) 40%, var(--banana) 60%,
+    var(--f1-red) 60%, var(--f1-red) 100%
+  );
+  margin: 1.5rem 0;
+}
+
+/* ============================================================
+   DROPDOWN SELECTORS — Replaces picker lists
+   ============================================================ */
+
+.dropdown-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.dropdown-slot {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.dropdown-pos {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: var(--white);
+  background: var(--f1-red);
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
+
+.dropdown-select {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+
+.dropdown-select:focus {
+  outline: none;
+  border-color: var(--f1-red);
+}
+
+.dropdown-select option {
+  background: var(--bg-card);
+  color: var(--text);
+}
+
+.dropdown-select option:disabled {
+  color: var(--text-muted);
+}
+
+/* Team badge placeholder */
+.team-badge-placeholder {
+  width: 36px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   TICKER BAR — Fixed bottom, scrolling F1 memes
+   ============================================================ */
+
+.ticker-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 34px;
+  background: #0a0a0a;
+  border-top: 2px solid var(--f1-red);
+  display: flex;
+  align-items: center;
+  z-index: 150;
+  overflow: hidden;
+}
+
+.ticker-label {
+  background: var(--f1-red);
+  color: white;
+  font-weight: 900;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  padding: 0 0.75rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.ticker-track {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.ticker-content {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  animation: ticker-scroll var(--ticker-duration, 180s) linear infinite;
+  will-change: transform;
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Padding so page content doesn't hide behind ticker */
+body {
+  padding-bottom: 42px;
+}
+
+/* ============================================================
+   CUSTOM DROPDOWN — With team logos
+   ============================================================ */
+
+.custom-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  margin-bottom: 0.35rem;
+}
+
+.custom-dropdown-trigger {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  text-align: left;
+  min-height: 40px;
+}
+
+.custom-dropdown-trigger:hover {
+  border-color: var(--border-light);
+}
+
+.cdd-open .custom-dropdown-trigger {
+  border-color: var(--f1-red);
+}
+
+.cdd-selected {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cdd-placeholder {
+  color: var(--text-muted);
+}
+
+.cdd-arrow {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+
+.cdd-open .cdd-arrow {
+  transform: rotate(180deg);
+}
+
+.cdd-clear {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.25rem;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+
+.cdd-clear:hover {
+  color: var(--f1-red);
+}
+
+/* Dropdown panel — white background */
+.cdd-panel {
+  position: absolute;
+  top: 100%;
+  left: 32px;
+  right: 26px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  z-index: 50;
+  max-height: 320px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+.cdd-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  cursor: pointer;
+  transition: background 0.1s;
+  border-bottom: 1px solid #eee;
+  color: #222;
+}
+
+.cdd-option:last-child {
+  border-bottom: none;
+}
+
+.cdd-option:hover {
+  background: #f0f0f0;
+}
+
+.cdd-option.cdd-active {
+  background: #fef2f2;
+  border-left: 3px solid var(--f1-red);
+}
+
+.cdd-option.cdd-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.cdd-option-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cdd-option-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cdd-option-sub {
+  font-size: 0.65rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Team logo images */
+.team-logo {
+  width: 72px;
+  height: 44px;
+  object-fit: contain;
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.team-logo-sm {
+  width: 56px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* Fallback badges also larger */
+.team-badge, .team-badge-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  border-radius: var(--radius);
+}
+
+.team-badge {
+  font-size: 0.65rem;
+  padding: 0.35rem 0.6rem;
+  min-width: 42px;
+}
+
+.team-badge-sm {
+  font-size: 0.6rem;
+  padding: 0.25rem 0.5rem;
+  min-width: 36px;
+}
+
+/* ============================================================
+   RACE LIST — Next races on home
+   ============================================================ */
+
+.race-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.race-row:last-child {
+  border-bottom: none;
+}
+
+.race-row.race-next {
+  background: rgba(225, 6, 0, 0.06);
+  margin: 0 -1.5rem;
+  padding: 0.7rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.race-round {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.race-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.race-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+.race-date {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   RULES PAGE
+   ============================================================ */
+
+.rules-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.rules-phase-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.rules-phase-number {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--white);
+  background: var(--f1-red);
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
+
+.rules-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.rules-table th {
+  text-align: center;
+  padding: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border);
+}
+
+.rules-table td {
+  text-align: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+
+.rules-table td:first-child {
+  text-align: left;
+  font-weight: 700;
+}
+
+.rules-ordago-card {
+  padding: 0.75rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-left: 4px solid;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.rules-bonus-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.rules-bonus-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+}
+
+.rules-penalty-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--f1-red);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.rules-penalty-name {
+  font-weight: 900;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--banana);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  flex-shrink: 0;
+  padding: 0.25rem 0;
+}
+
+.rules-prize-card {
+  padding: 1.25rem;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.rules-prize-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.rules-prize-winner {
+  border-left: 4px solid var(--banana);
+}
+
+.rules-prize-winner h3 {
+  color: var(--banana);
+}
+
+.rules-prize-loser {
+  border-left: 4px solid var(--f1-red);
+}
+
+.rules-prize-loser h3 {
+  color: var(--f1-red);
+}
+
+/* ============================================================
+   BREAKDOWN — Two-row layout (phases + extras)
+   ============================================================ */
+
+.breakdown-phases {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.breakdown-extras {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.player-tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.player-tab-total {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--banana);
+  font-variant-numeric: tabular-nums;
+}
+
+.player-tab-total-label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .breakdown-phases { grid-template-columns: 1fr 1fr; }
+  .breakdown-extras { grid-template-columns: 1fr 1fr 1fr; }
+  .race-row.race-next { margin: 0 -1rem; padding: 0.7rem 1rem; }
+}
+
+/* Card red stripe uses pseudo-element — keep it above overflow:visible */
+.card::before {
+  pointer-events: none;
+}
+
+/* ============================================================
+   PHASE LOCK — Banner + disabled dropdowns
+   ============================================================ */
+
+.lock-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  background: rgba(225, 6, 0, 0.1);
+  border: 1px solid rgba(225, 6, 0, 0.3);
+  border-radius: var(--radius);
+  color: var(--f1-red);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.lock-icon {
+  font-size: 1rem;
+}
+
+.cdd-locked .custom-dropdown-trigger {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cdd-locked .custom-dropdown-trigger:hover {
+  border-color: var(--border);
+}
+
+/* ============================================================
+   EVENTOS — Public phase events on home
+   ============================================================ */
+
+.evento-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--banana);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.evento-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.82rem;
+}
+
+.evento-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding-left: 1.75rem;
+}
+
+/* ============================================================
+   PLAYER STATUS
+   ============================================================ */
+
+.player-status {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-style: italic;
+  margin-left: 0.35rem;
+}
+
+.status-edit-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.status-input {
+  flex: 1;
+  max-width: 250px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.78rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: inherit;
+}
+
+.status-input:focus {
+  outline: none;
+  border-color: var(--f1-red);
+}
+
+.status-input::placeholder {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   ADMIN UNLOCK GRID
+   ============================================================ */
+
+.unlock-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.unlock-player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.unlock-player-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.unlock-phases {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.unlock-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 28px;
+  border-radius: var(--radius);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.unlock-toggle:hover {
+  border-color: var(--border-light);
+}
+
+.unlock-toggle.active {
+  background: var(--f1-red);
+  border-color: var(--f1-red);
+  color: var(--white);
+}

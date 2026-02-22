@@ -1,0 +1,30 @@
+{
+  "results": {
+    "phase1": {
+      "drivers": ["verstappen", "norris", "leclerc", "piastri", "hamilton"],
+      "constructors": ["mclaren", "red-bull", "ferrari"]
+    }
+  },
+  "eventos": {
+    "phase1": {
+      "mariona": false,
+      "amaya": true,
+      "ana": false,
+      "oscar": true
+    }
+  },
+  "ordagoVotes": {},
+  "bonuses": {
+    "alonso_wins": 0,
+    "sainz_wins": 1,
+    "max_wall": 2,
+    "gasly_chef": 0,
+    "yuki_radio": 4
+  },
+  "penalties": {
+    "mariona": [{ "count": 1 }],
+    "amaya": [],
+    "ana": [{ "count": 1 }],
+    "oscar": []
+  }
+}

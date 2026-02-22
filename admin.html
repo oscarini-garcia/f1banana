@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · Banana Leclerc 2026</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-inner">
+      <h1><span class="accent">Banana</span> Leclerc <span class="subtitle">Challenge 2026</span></h1>
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="predicciones.html">Predicciones</a>
+        <a href="clasificacion.html">Clasificación</a>
+        <a href="reglas.html">Reglas</a>
+        <a href="admin.html" class="active">Admin</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- PIN gate -->
+    <div class="card" id="pinGate">
+      <h2>Panel de Administración</h2>
+      <p class="text-secondary mb-2" style="font-size:0.8rem">Introduce el PIN para acceder. Solo para el comisario jefe <em>(Oscar, probablemente)</em>.</p>
+      <input type="password" id="pinInput" placeholder="PIN de acceso" style="max-width: 200px;">
+      <button class="btn btn-primary btn-small mt-1" id="btnPin">Entrar</button>
+      <p class="text-red mt-1 hidden" id="pinError" style="font-size:0.8rem">PIN incorrecto. Inténtalo de nuevo, bananero.</p>
+    </div>
+
+    <!-- Admin content (hidden until PIN) -->
+    <div id="adminContent" class="hidden">
+
+      <!-- Evento validation -->
+      <div class="card">
+        <h2>Validar Eventos</h2>
+        <p class="text-secondary mb-2" style="font-size:0.8rem">Marca si cada jugador acertó su evento.</p>
+        <div id="eventoValidation"></div>
+        <button class="btn btn-primary mt-2" id="btnSaveEventos">Guardar eventos</button>
+      </div>
+
+      <!-- Órdago votes -->
+      <div class="card">
+        <h2>Votación Órdago</h2>
+        <p class="text-secondary mb-2" style="font-size:0.8rem">Final de temporada: voto familiar secreto.</p>
+        <div id="ordagoVoting"></div>
+        <button class="btn btn-primary mt-2" id="btnSaveOrdago">Guardar votos órdago</button>
+      </div>
+
+      <!-- Bonuses -->
+      <div class="card">
+        <h2>Bonos Colectivos y Especiales</h2>
+        <div class="flex flex-col gap-1">
+          <div class="flex items-center justify-between">
+            <span>Victorias de Alonso:</span>
+            <input type="number" id="alonsoWins" min="0" max="24" value="0" style="width:60px">
+          </div>
+          <div class="flex items-center justify-between">
+            <span>Victorias de Sainz:</span>
+            <input type="number" id="sainzWins" min="0" max="24" value="0" style="width:60px">
+          </div>
+          <div class="flex items-center justify-between">
+            <span>Max contra muro en qualy (carreras):</span>
+            <input type="number" id="maxWall" min="0" max="24" value="0" style="width:60px">
+          </div>
+          <div class="flex items-center justify-between">
+            <span>Gasly chef en podio (carreras):</span>
+            <input type="number" id="gaslyChef" min="0" max="24" value="0" style="width:60px">
+          </div>
+          <div class="flex items-center justify-between">
+            <span>Yuki grita por radio (carreras):</span>
+            <input type="number" id="yukiRadio" min="0" max="24" value="0" style="width:60px">
+          </div>
+        </div>
+        <button class="btn btn-primary mt-2" id="btnSaveBonuses">Guardar bonos</button>
+      </div>
+
+      <!-- Penalties -->
+      <div class="card">
+        <h2>Penalizaciones</h2>
+        <p class="text-secondary mb-2" style="font-size:0.8rem">Registra penalizaciones individuales. <em>Con cariño, claro.</em></p>
+        <div id="penaltySection"></div>
+        <button class="btn btn-primary mt-2" id="btnSavePenalties">Guardar penalizaciones</button>
+      </div>
+
+      <!-- Unlock predictions -->
+      <div class="card">
+        <h2>Desbloquear Predicciones</h2>
+        <p class="text-secondary mb-2" style="font-size:0.8rem">Permite a un jugador re-editar sus predicciones de una fase ya cerrada. <em>Úsalo con responsabilidad, comisario.</em></p>
+        <div id="unlockSection"></div>
+        <button class="btn btn-primary mt-2" id="btnSaveUnlocks">Guardar desbloqueos</button>
+      </div>
+
+      <!-- Dev tools -->
+      <div class="card" id="devTools">
+        <h2>Herramientas Dev</h2>
+        <button class="btn btn-danger btn-small" id="btnResetAll">Borrar TODOS los datos locales</button>
+        <p class="text-muted mt-1">Solo disponible en modo desarrollo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Banana Leclerc Challenge 2026 · Hecho con plátanos y sufrimiento familiar
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <div class="ticker-bar" id="tickerBar">
+    <div class="ticker-label">F1</div>
+    <div class="ticker-track"><div class="ticker-content" id="tickerContent"></div></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    (function(){
+      const msgs = [...F1_TICKER_MESSAGES].sort(() => Math.random() - 0.5);
+      const sep = '   ●   ', text = msgs.join(sep) + sep;
+      const el = document.getElementById('tickerContent');
+      el.innerHTML = '<span>'+text+'</span><span>'+text+'</span>';
+      el.style.setProperty('--ticker-duration', Math.max(text.length * 0.15, 60) + 's');
+    })();
+  </script>
+</body>
+</html>
