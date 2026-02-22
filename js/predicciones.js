@@ -266,18 +266,13 @@
     const phaseKey = `phase${currentPhase}`;
     const drivers = selectedDrivers.filter(Boolean);
     const teams = selectedTeams.filter(Boolean);
-
-    if (drivers.length < 5) { showToast('Necesitas 5 pilotos'); return; }
-    if (teams.length < 3) { showToast('Necesitas 3 constructores'); return; }
     const evento = document.getElementById('eventoInput').value.trim();
-    if (!evento) { showToast('Escribe un evento para la fase'); return; }
 
     playerData[phaseKey] = { drivers, constructors: teams, evento };
 
     if (currentPhase === 1) {
       const ordago = document.getElementById('ordagoInput').value.trim();
-      if (!ordago) { showToast('Escribe tu órdago'); return; }
-      playerData.ordago = ordago;
+      if (ordago) playerData.ordago = ordago;
     }
 
     const btn = document.getElementById('btnSave');
