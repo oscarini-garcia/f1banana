@@ -393,7 +393,7 @@ const BUILD_TIME = '22-02-2026 18:17';
 
 // --- Show build time in footer ---
 document.querySelectorAll('.build-time').forEach(el => {
-  el.textContent = BUILD_TIME === '22-02-2026 18:17' ? 'dev' : BUILD_TIME;
+  el.textContent = BUILD_TIME;
 });
 
 // --- Session via cookie (persists across browser restarts) ---
