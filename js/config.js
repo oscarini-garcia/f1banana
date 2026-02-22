@@ -4,11 +4,11 @@
 
 const CONFIG = {
   // --- JSONBin.io ---
-  JSONBIN_API_KEY: '$2a$10$PLACEHOLDER_API_KEY', // Reemplazar con clave real
-  JSONBIN_BIN_ID: '', // Un solo bin para todo el estado
+  JSONBIN_API_KEY: '$2a$10$ss.2va8OnShVIPM0cQpq6ey49smlL/wGUrPvMhYXA70e0ZjllDife',
+  JSONBIN_BIN_ID: '699b2779d0ea881f40cf6414',
 
   // Modo desarrollo (usa datos locales en vez de JSONBin)
-  DEV_MODE: true,
+  DEV_MODE: false,
 
   // --- Jugadores ---
   PLAYERS: [
