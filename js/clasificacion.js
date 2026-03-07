@@ -298,6 +298,7 @@
     // Show predictions detail
     const pd = allPlayerData[selectedPlayerId];
     const currentUser = getSessionPlayer();
+    const today = new Date().toISOString().slice(0, 10);
     if (pd) {
       html += `<div class="mt-2" style="font-size:0.85rem">`;
       // Órdago: solo visible para el propio jugador
@@ -308,17 +309,24 @@
       }
       for (let phase = 1; phase <= 4; phase++) {
         const phaseData = pd[`phase${phase}`] || {};
+        const phaseConfig = CONFIG.PHASES.find(p => p.id === phase);
+        const phaseRevealed = CONFIG.DEV_MODE || (phaseConfig && phaseConfig.deadline && today >= phaseConfig.deadline);
+        const canSee = selectedPlayerId === currentUser || phaseRevealed;
         if (phaseData.drivers && phaseData.drivers.length > 0) {
           html += `<p class="mt-1"><strong>Fase ${phase}:</strong></p>`;
-          html += `<p class="text-muted">Pilotos: ${phaseData.drivers.map(id => {
-            const d = getDriver(id);
-            return d ? d.name : id;
-          }).join(', ')}</p>`;
-          html += `<p class="text-muted">Constructores: ${(phaseData.constructors || []).map(id => {
-            const t = getTeam(id);
-            return t ? t.name : id;
-          }).join(', ')}</p>`;
-          html += `<p class="text-muted">Evento: ${phaseData.evento || '—'}</p>`;
+          if (canSee) {
+            html += `<p class="text-muted">Pilotos: ${phaseData.drivers.map(id => {
+              const d = getDriver(id);
+              return d ? d.name : id;
+            }).join(', ')}</p>`;
+            html += `<p class="text-muted">Constructores: ${(phaseData.constructors || []).map(id => {
+              const t = getTeam(id);
+              return t ? t.name : id;
+            }).join(', ')}</p>`;
+            html += `<p class="text-muted">Evento: ${phaseData.evento || '—'}</p>`;
+          } else {
+            html += `<p class="text-muted"><em>Secreto hasta ${phaseConfig.deadline}</em></p>`;
+          }
         }
       }
       html += `</div>`;
