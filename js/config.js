@@ -75,10 +75,10 @@ const CONFIG = {
 
   // --- Fases ---
   PHASES: [
-    { id: 1, label: 'Fase 1', races: '1–6',      deadline: '2026-03-08' },  // Antes de Australia
-    { id: 2, label: 'Fase 2', races: '7–12',     deadline: '2026-05-30' },  // Antes de Emilia Romaña
-    { id: 3, label: 'Fase 3', races: '13–18',    deadline: '2026-08-01' },  // Antes de Bélgica
-    { id: 4, label: 'Fase 4', races: '19–Final', deadline: '2026-10-17' },  // Antes de EE.UU.
+    { id: 1, label: 'Fase 1', races: '1–6',      deadline: '2026-03-05' },  // 3 días antes de Australia (8 mar)
+    { id: 2, label: 'Fase 2', races: '7–12',     deadline: '2026-05-28' },  // 3 días antes de Emilia Romaña (31 may)
+    { id: 3, label: 'Fase 3', races: '13–18',    deadline: '2026-07-30' },  // 3 días antes de Bélgica (2 ago)
+    { id: 4, label: 'Fase 4', races: '19–Final', deadline: '2026-10-15' },  // 3 días antes de EE.UU. (18 oct)
   ],
 
   // --- Puntuación por fase ---
