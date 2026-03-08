@@ -14,6 +14,7 @@
         <a href="index.html">Start</a>
         <a href="predicciones.html">Prediction</a>
         <a href="clasificacion.html">Rank</a>
+        <a href="resultados.html">Results</a>
         <a href="reglas.html">Help</a>
         <a href="admin.html" class="active">Admin</a>
       </nav>
@@ -39,6 +40,15 @@
 
     <!-- Admin content (hidden until PIN) -->
     <div id="adminContent" class="hidden">
+
+      <!-- Phase Results Entry -->
+      <div class="card">
+        <h2>Resultados de Fase</h2>
+        <p class="text-secondary mb-2" style="font-size:0.8rem">Introduce los resultados reales de cada fase (Top 5 pilotos, Top 3 constructores).</p>
+        <div class="phase-tabs" id="resultPhaseTabs"></div>
+        <div id="resultEntry"></div>
+        <button class="btn btn-primary mt-2" id="btnSaveResults">Guardar resultados</button>
+      </div>
 
       <!-- Evento validation -->
       <div class="card">

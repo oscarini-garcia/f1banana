@@ -1686,3 +1686,186 @@ body {
   border-color: var(--f1-red);
   color: var(--white);
 }
+
+/* ============================================================
+   RESULTS PAGE — Race results & comparison
+   ============================================================ */
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.result-pos {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.85rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.result-driver-img {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.result-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.result-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.result-team {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Championship positions */
+.champ-pos-1 { background: var(--banana) !important; color: #111 !important; }
+.champ-pos-2 { background: #C0C0C0 !important; color: #111 !important; }
+.champ-pos-3 { background: #CD7F32 !important; color: #111 !important; }
+.champ-pos-n { background: var(--bg-primary) !important; color: var(--text-muted) !important; }
+
+.champ-stats {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.champ-pts {
+  display: block;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+.champ-detail {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* Comparison view */
+.comparison-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.comparison-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+}
+
+.comparison-row.comp-exact {
+  border-left: 4px solid var(--green);
+  background: rgba(0, 210, 190, 0.06);
+}
+
+.comparison-row.comp-partial {
+  border-left: 4px solid var(--banana);
+  background: rgba(255, 215, 0, 0.06);
+}
+
+.comparison-row.comp-miss {
+  border-left: 4px solid var(--f1-red);
+  opacity: 0.7;
+}
+
+.comp-pos {
+  font-weight: 900;
+  font-size: 0.9rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.comp-pred, .comp-actual {
+  flex: 1;
+  min-width: 0;
+}
+
+.comp-label {
+  display: block;
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.comp-name {
+  font-weight: 600;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.comp-vs {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+.comp-status {
+  text-align: right;
+  flex-shrink: 0;
+  min-width: 55px;
+}
+
+.comp-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.comp-exact .comp-badge { color: var(--green); }
+.comp-partial .comp-badge { color: var(--banana); }
+.comp-miss .comp-badge { color: var(--f1-red); }
+
+.comp-pts {
+  display: block;
+  font-weight: 900;
+  font-size: 0.85rem;
+  color: var(--banana);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .comparison-row { gap: 0.3rem; padding: 0.4rem 0.5rem; }
+  .comp-name { font-size: 0.72rem; }
+  .result-driver-img { width: 32px; height: 32px; }
+}

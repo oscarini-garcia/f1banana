@@ -95,7 +95,7 @@ const CONFIG = {
       3: [10,  8,  6],
       4: [ 5,  4,  3],
     },
-    consolation: 1,              // Piloto en Top 5 pero posición incorrecta
+    consolation: 0.4,             // 40% de los puntos si piloto/constructor en Top N pero posición incorrecta
     evento: 10,                  // Puntos por evento acertado
     ordago: { exact: 25, partial: 15, similar: 5, fail: 0 },
   },
@@ -389,7 +389,7 @@ const F1_TICKER_MESSAGES = [
 ];
 
 // --- Build timestamp (updated on each deploy) ---
-const BUILD_TIME = '22-02-2026 18:17';
+const BUILD_TIME = '__BUILD__';
 
 // --- Show build time in footer ---
 document.querySelectorAll('.build-time').forEach(el => {

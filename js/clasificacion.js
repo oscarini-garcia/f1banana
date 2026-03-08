@@ -29,10 +29,10 @@
       }
     }
 
-    // Consolation: driver in top 5 but wrong position (no double counting)
+    // Consolation: driver in top 5 but wrong position → 40% of position points
     for (let i = 0; i < predicted.length; i++) {
       if (predicted[i] !== actual[i] && actual.includes(predicted[i]) && !consolationUsed.has(predicted[i])) {
-        score += CONFIG.SCORING.consolation;
+        score += Math.round((pointsTable[i] || 0) * CONFIG.SCORING.consolation);
         consolationUsed.add(predicted[i]);
       }
     }
@@ -51,10 +51,12 @@
         score += pointsTable[i] || 0;
       }
     }
-    // Consolation for constructors in top 3 but wrong position
+    // Consolation for constructors in top 3 but wrong position → 40% of position points
+    const consUsed = new Set();
     for (let i = 0; i < predicted.length; i++) {
-      if (predicted[i] !== actual[i] && actual.includes(predicted[i])) {
-        score += CONFIG.SCORING.consolation;
+      if (predicted[i] !== actual[i] && actual.includes(predicted[i]) && !consUsed.has(predicted[i])) {
+        score += Math.round((pointsTable[i] || 0) * CONFIG.SCORING.consolation);
+        consUsed.add(predicted[i]);
       }
     }
     return score;

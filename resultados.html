@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Clasificación · Banana Leclerc 2026</title>
+  <title>Resultados · Banana Leclerc 2026</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
       <nav class="nav">
         <a href="index.html">Start</a>
         <a href="predicciones.html">Prediction</a>
-        <a href="clasificacion.html" class="active">Rank</a>
-        <a href="resultados.html">Results</a>
+        <a href="clasificacion.html">Rank</a>
+        <a href="resultados.html" class="active">Results</a>
         <a href="reglas.html">Help</a>
         <a href="admin.html">Admin</a>
       </nav>
@@ -22,30 +22,27 @@
   </div>
 
   <div class="container">
-    <!-- Leaderboard -->
+    <!-- Phase results -->
     <div class="card">
-      <h2>Clasificación General</h2>
-      <div id="leaderboard" class="loading">Calculando puntuaciones...</div>
+      <h2>Resultados por Fase</h2>
+      <p class="text-secondary mb-2" style="font-size:0.8rem">Los resultados reales de la temporada, introducidos por el comisario jefe.</p>
+      <div class="phase-tabs" id="phaseTabs"></div>
+      <div id="phaseResults" class="loading">Cargando resultados...</div>
     </div>
 
-    <!-- Score breakdown per player -->
+    <!-- Player comparison -->
     <div class="card">
-      <h2>Desglose por Jugador</h2>
-      <div class="phase-tabs" id="playerTabs"></div>
-      <div id="playerBreakdown"></div>
+      <h2>Comparativa de Predicciones</h2>
+      <p class="text-secondary mb-2" style="font-size:0.8rem">Predicciones vs resultados reales. Verde = exacto, amarillo = acertado pero en otra posición.</p>
+      <div class="phase-tabs" id="playerCompTabs"></div>
+      <div id="playerComparison"></div>
     </div>
 
-    <!-- Bonus & penalty log -->
+    <!-- Championship standings -->
     <div class="card">
-      <h2>Bonos y Penalizaciones</h2>
-      <div id="bonusPenaltyLog"></div>
-    </div>
-
-    <!-- Predictions reveal (after deadline) -->
-    <div class="card">
-      <h2>Predicciones reveladas</h2>
-      <p class="text-secondary mb-2" style="font-size:0.8rem">Solo visibles cuando ha pasado el plazo de la fase.</p>
-      <div id="predictionsReveal"></div>
+      <h2>Campeonato Acumulado</h2>
+      <p class="text-secondary mb-2" style="font-size:0.8rem">Pilotos y constructores que más aparecen en el top según los resultados reales.</p>
+      <div id="championship"></div>
     </div>
   </div>
 
@@ -62,7 +59,7 @@
 
   <script src="js/config.js"></script>
   <script src="js/storage.js"></script>
-  <script src="js/clasificacion.js"></script>
+  <script src="js/resultados.js"></script>
   <script>
     (function(){
       const msgs = [...F1_TICKER_MESSAGES].sort(() => Math.random() - 0.5);

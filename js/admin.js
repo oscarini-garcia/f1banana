@@ -29,6 +29,90 @@
     if (e.key === 'Enter') document.getElementById('btnPin').click();
   });
 
+  // --- Results entry ---
+  let resultPhase = 1;
+
+  function renderResultPhaseTabs() {
+    const container = document.getElementById('resultPhaseTabs');
+    container.innerHTML = CONFIG.PHASES.map(p => `
+      <button class="phase-tab ${p.id === resultPhase ? 'active' : ''}" data-phase="${p.id}">
+        ${p.label}
+      </button>
+    `).join('');
+    container.querySelectorAll('.phase-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        resultPhase = parseInt(btn.dataset.phase);
+        renderResultPhaseTabs();
+        renderResultEntry();
+      });
+    });
+  }
+
+  function renderResultEntry() {
+    const phaseKey = `phase${resultPhase}`;
+    const results = (globalData.results && globalData.results[phaseKey]) || {};
+    const currentDrivers = results.drivers || [];
+    const currentConstructors = results.constructors || [];
+
+    let html = '<h3>Top 5 Pilotos</h3>';
+    for (let i = 0; i < 5; i++) {
+      html += `
+        <div class="dropdown-slot">
+          <div class="dropdown-pos">${i + 1}</div>
+          <select class="dropdown-select" id="result_driver_${i}">
+            <option value="">— Seleccionar piloto —</option>
+            ${CONFIG.DRIVERS.map(d => `
+              <option value="${d.id}" ${currentDrivers[i] === d.id ? 'selected' : ''}>${d.name} (${getTeam(d.team)?.abbr || ''})</option>
+            `).join('')}
+          </select>
+        </div>
+      `;
+    }
+
+    html += '<h3 class="mt-2">Top 3 Constructores</h3>';
+    for (let i = 0; i < 3; i++) {
+      html += `
+        <div class="dropdown-slot">
+          <div class="dropdown-pos">${i + 1}</div>
+          <select class="dropdown-select" id="result_constructor_${i}">
+            <option value="">— Seleccionar equipo —</option>
+            ${CONFIG.TEAMS.map(t => `
+              <option value="${t.id}" ${currentConstructors[i] === t.id ? 'selected' : ''}>${t.name}</option>
+            `).join('')}
+          </select>
+        </div>
+      `;
+    }
+
+    document.getElementById('resultEntry').innerHTML = html;
+  }
+
+  document.getElementById('btnSaveResults').addEventListener('click', async () => {
+    if (!globalData.results) globalData.results = {};
+    const phaseKey = `phase${resultPhase}`;
+
+    const drivers = [];
+    for (let i = 0; i < 5; i++) {
+      const val = document.getElementById(`result_driver_${i}`).value;
+      if (val) drivers.push(val);
+    }
+
+    const constructors = [];
+    for (let i = 0; i < 3; i++) {
+      const val = document.getElementById(`result_constructor_${i}`).value;
+      if (val) constructors.push(val);
+    }
+
+    globalData.results[phaseKey] = { drivers, constructors };
+
+    try {
+      await Storage.saveGlobalData(globalData);
+      showToast('Resultados de fase guardados');
+    } catch (e) {
+      showToast('Error: ' + e.message);
+    }
+  });
+
   // --- Evento validation ---
   async function renderEventoValidation() {
     const allPlayerData = await Storage.getAllPlayerData();
@@ -316,6 +400,8 @@
     }
 
     loadBonuses();
+    renderResultPhaseTabs();
+    renderResultEntry();
     renderEventoValidation();
     renderOrdagoVoting();
     renderPenalties();
