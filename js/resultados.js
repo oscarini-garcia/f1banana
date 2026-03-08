@@ -157,10 +157,10 @@
 
     html += '<div class="results-list mt-1">';
     results.forEach((r, i) => {
-      const driver = r.Driver;
-      const constructor = r.Constructor;
-      const ourDriver = findOurDriver(driver.driverId, driver.familyName);
-      const ourTeam = findOurTeam(constructor.constructorId);
+      const driver = r.Driver || {};
+      const constructor = r.Constructor || {};
+      const ourDriver = driver.driverId ? findOurDriver(driver.driverId, driver.familyName) : null;
+      const ourTeam = constructor.constructorId ? findOurTeam(constructor.constructorId) : null;
       const teamColor = ourTeam ? ourTeam.color : '#666';
       const imgUrl = ourDriver ? getDriverImageUrl(ourDriver) : '';
       const pts = parseInt(r.points) || 0;
@@ -168,13 +168,13 @@
 
       html += `
         <div class="result-row ${pos <= 3 ? 'result-podium result-podium-' + pos : ''}">
-          <div class="result-pos" style="background: ${teamColor}">${r.position}</div>
-          ${imgUrl ? `<img src="${imgUrl}" class="result-driver-img" alt="${driver.familyName}">` : `<div class="result-driver-placeholder"></div>`}
+          <div class="result-pos" style="background: ${teamColor}">${r.position || pos}</div>
+          ${imgUrl ? `<img src="${imgUrl}" class="result-driver-img" alt="${driver.familyName || ''}">` : `<div class="result-driver-placeholder"></div>`}
           <div class="result-info">
-            <span class="result-name">${driver.givenName} ${driver.familyName}</span>
-            <span class="result-team" style="color: ${teamColor}">${constructor.name}</span>
+            <span class="result-name">${driver.givenName || ''} ${driver.familyName || ''}</span>
+            <span class="result-team" style="color: ${teamColor}">${constructor.name || ''}</span>
           </div>
-          ${ourTeam ? renderTeamBadge(ourTeam.id, 'sm') : `<span class="team-badge-sm" style="background:${teamColor}">${constructor.constructorId.slice(0,3).toUpperCase()}</span>`}
+          ${ourTeam ? renderTeamBadge(ourTeam.id, 'sm') : `<span class="team-badge-sm" style="background:${teamColor}">${constructor.constructorId ? constructor.constructorId.slice(0,3).toUpperCase() : ''}</span>`}
           <span class="result-pts">${pts > 0 ? '+' + pts : ''}</span>
         </div>
       `;
@@ -198,7 +198,7 @@
     driverStandings.forEach((s) => {
       const driver = s.Driver;
       const constructor = s.Constructors && s.Constructors[0];
-      const ourDriver = findOurDriver(driver.driverId, driver.familyName);
+      const ourDriver = driver ? findOurDriver(driver.driverId, driver.familyName) : null;
       const ourTeam = constructor ? findOurTeam(constructor.constructorId) : null;
       const teamColor = ourTeam ? ourTeam.color : '#666';
       const imgUrl = ourDriver ? getDriverImageUrl(ourDriver) : '';
@@ -206,15 +206,15 @@
 
       html += `
         <div class="result-row">
-          <div class="result-pos champ-pos-${pos <= 3 ? pos : 'n'}">${s.position}</div>
-          ${imgUrl ? `<img src="${imgUrl}" class="result-driver-img" alt="${driver.familyName}">` : `<div class="result-driver-placeholder"></div>`}
+          <div class="result-pos champ-pos-${pos <= 3 ? pos : 'n'}">${s.position || pos}</div>
+          ${imgUrl ? `<img src="${imgUrl}" class="result-driver-img" alt="${driver ? driver.familyName : ''}">` : `<div class="result-driver-placeholder"></div>`}
           <div class="result-info">
-            <span class="result-name">${driver.givenName} ${driver.familyName}</span>
+            <span class="result-name">${driver ? driver.givenName : ''} ${driver ? driver.familyName : ''}</span>
             <span class="result-team" style="color: ${teamColor}">${constructor ? constructor.name : ''}</span>
           </div>
           <div class="champ-stats">
-            <span class="champ-pts">${s.points}</span>
-            <span class="champ-detail">${s.wins} victorias</span>
+            <span class="champ-pts">${s.points || 0}</span>
+            <span class="champ-detail">${s.wins || 0} victorias</span>
           </div>
         </div>
       `;
@@ -237,20 +237,20 @@
     let html = '<div class="results-list">';
     constructorStandings.forEach((s) => {
       const constructor = s.Constructor;
-      const ourTeam = findOurTeam(constructor.constructorId);
+      const ourTeam = constructor ? findOurTeam(constructor.constructorId) : null;
       const teamColor = ourTeam ? ourTeam.color : '#666';
       const pos = parseInt(s.position);
 
       html += `
         <div class="result-row">
-          <div class="result-pos champ-pos-${pos <= 3 ? pos : 'n'}">${s.position}</div>
-          ${ourTeam ? renderTeamBadge(ourTeam.id) : `<span class="team-badge" style="background:${teamColor}">${constructor.constructorId.slice(0,3).toUpperCase()}</span>`}
+          <div class="result-pos champ-pos-${pos <= 3 ? pos : 'n'}">${s.position || pos}</div>
+          ${ourTeam ? renderTeamBadge(ourTeam.id) : `<span class="team-badge" style="background:${teamColor}">${constructor ? constructor.constructorId.slice(0,3).toUpperCase() : ''}</span>`}
           <div class="result-info">
-            <span class="result-name">${constructor.name}</span>
+            <span class="result-name">${constructor ? constructor.name : ''}</span>
           </div>
           <div class="champ-stats">
-            <span class="champ-pts">${s.points}</span>
-            <span class="champ-detail">${s.wins} victorias</span>
+            <span class="champ-pts">${s.points || 0}</span>
+            <span class="champ-detail">${s.wins || 0} victorias</span>
           </div>
         </div>
       `;
