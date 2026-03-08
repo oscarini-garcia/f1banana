@@ -26,6 +26,7 @@ const Storage = (() => {
       players: {},
       global: {
         results: {},
+        raceResults: {},
         eventos: {},
         ordagoVotes: {},
         bonuses: {

@@ -95,7 +95,7 @@ const CONFIG = {
       3: [10,  8,  6],
       4: [ 5,  4,  3],
     },
-    consolation: 0.4,             // 40% de los puntos si piloto/constructor en Top N pero posición incorrecta
+    consolation: 1,              // Piloto en Top 5 pero posición incorrecta
     evento: 10,                  // Puntos por evento acertado
     ordago: { exact: 25, partial: 15, similar: 5, fail: 0 },
   },

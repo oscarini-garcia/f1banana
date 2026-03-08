@@ -1770,102 +1770,113 @@ body {
   color: var(--text-muted);
 }
 
-/* Comparison view */
-.comparison-list {
+/* Race tabs — horizontal scroll */
+.race-tabs-scroll {
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.race-tab {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-}
-
-.comparison-row {
-  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  background: var(--bg-elevated);
+  gap: 0.1rem;
+  padding: 0.4rem 0.5rem;
   border: 1px solid var(--border);
+  background: var(--bg-elevated);
   border-radius: var(--radius);
-  font-size: 0.82rem;
-}
-
-.comparison-row.comp-exact {
-  border-left: 4px solid var(--green);
-  background: rgba(0, 210, 190, 0.06);
-}
-
-.comparison-row.comp-partial {
-  border-left: 4px solid var(--banana);
-  background: rgba(255, 215, 0, 0.06);
-}
-
-.comparison-row.comp-miss {
-  border-left: 4px solid var(--f1-red);
-  opacity: 0.7;
-}
-
-.comp-pos {
-  font-weight: 900;
-  font-size: 0.9rem;
-  width: 20px;
-  text-align: center;
+  cursor: pointer;
   flex-shrink: 0;
+  transition: all 0.15s;
+  font-family: inherit;
+  min-width: 44px;
 }
 
-.comp-pred, .comp-actual {
-  flex: 1;
-  min-width: 0;
+.race-tab:hover {
+  border-color: var(--border-light);
+  background: #2a2a2a;
 }
 
-.comp-label {
-  display: block;
+.race-tab.active {
+  background: var(--f1-red);
+  border-color: var(--f1-red);
+  color: var(--white);
+}
+
+.race-tab-empty {
+  opacity: 0.35;
+}
+
+.race-tab-empty.active {
+  opacity: 1;
+}
+
+.race-tab-flag {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.race-tab-round {
   font-size: 0.55rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.comp-name {
-  font-weight: 600;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
-}
-
-.comp-vs {
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  flex-shrink: 0;
-}
-
-.comp-status {
-  text-align: right;
-  flex-shrink: 0;
-  min-width: 55px;
-}
-
-.comp-badge {
-  font-size: 0.6rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  color: var(--text-muted);
 }
 
-.comp-exact .comp-badge { color: var(--green); }
-.comp-partial .comp-badge { color: var(--banana); }
-.comp-miss .comp-badge { color: var(--f1-red); }
+.race-tab.active .race-tab-round {
+  color: rgba(255,255,255,0.8);
+}
 
-.comp-pts {
+/* Race result header */
+.race-result-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.race-result-flag {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.race-result-name {
   display: block;
-  font-weight: 900;
-  font-size: 0.85rem;
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--white);
+}
+
+.race-result-date {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Race result points */
+.result-pts {
+  font-weight: 800;
+  font-size: 0.8rem;
   color: var(--banana);
+  flex-shrink: 0;
+  min-width: 30px;
+  text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
+/* Podium highlight */
+.result-podium-1 { border-left: 4px solid var(--banana); }
+.result-podium-2 { border-left: 4px solid #C0C0C0; }
+.result-podium-3 { border-left: 4px solid #CD7F32; }
+
 @media (max-width: 600px) {
-  .comparison-row { gap: 0.3rem; padding: 0.4rem 0.5rem; }
-  .comp-name { font-size: 0.72rem; }
   .result-driver-img { width: 32px; height: 32px; }
+  .race-tab { min-width: 40px; padding: 0.3rem 0.4rem; }
+  .race-tab-flag { font-size: 0.95rem; }
 }
