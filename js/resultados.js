@@ -58,19 +58,24 @@
   // ==================== INIT ====================
 
   async function init() {
-    // Remove loading spinners
-    document.getElementById('raceResult').classList.remove('loading');
+    const raceEl = document.getElementById('raceResult');
+    // Remove loading spinner
+    raceEl.classList.remove('loading');
+    raceEl.textContent = 'Conectando con la API de F1...';
 
     try {
-      [races, driverStandings, constructorStandings] = await Promise.all([
+      const [r, ds, cs] = await Promise.all([
         fetchRaces(),
         fetchDriverStandings(),
         fetchConstructorStandings(),
       ]);
+      races = r;
+      driverStandings = ds;
+      constructorStandings = cs;
     } catch (e) {
       console.error('Error fetching F1 data:', e);
-      document.getElementById('raceResult').innerHTML =
-        '<p class="text-red">Error cargando datos de F1. Intentalo de nuevo mas tarde.</p>';
+      raceEl.innerHTML =
+        `<p class="text-red">Error cargando datos de F1: ${e.message}</p>`;
       document.getElementById('driverChampionship').innerHTML = '';
       document.getElementById('constructorChampionship').innerHTML = '';
       return;
