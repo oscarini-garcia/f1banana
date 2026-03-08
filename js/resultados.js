@@ -6,7 +6,7 @@
 (function () {
 
   const F1_API = 'https://api.jolpi.ca/ergast/f1';
-  const SEASON = 'current';
+  const SEASON = '2026';
 
   let races = [];
   let driverStandings = [];
@@ -58,6 +58,9 @@
   // ==================== INIT ====================
 
   async function init() {
+    // Remove loading spinners
+    document.getElementById('raceResult').classList.remove('loading');
+
     try {
       [races, driverStandings, constructorStandings] = await Promise.all([
         fetchRaces(),
