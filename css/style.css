@@ -1742,6 +1742,7 @@ body {
   height: 40px;
   border-radius: var(--radius);
   object-fit: cover;
+  object-position: top;
   flex-shrink: 0;
 }
 
