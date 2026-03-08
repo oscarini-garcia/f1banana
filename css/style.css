@@ -1728,6 +1728,14 @@ body {
   flex-shrink: 0;
 }
 
+.result-driver-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  background: var(--bg-primary);
+  flex-shrink: 0;
+}
+
 .result-info {
   flex: 1;
   display: flex;

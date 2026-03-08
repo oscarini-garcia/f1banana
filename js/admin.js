@@ -29,59 +29,6 @@
     if (e.key === 'Enter') document.getElementById('btnPin').click();
   });
 
-  // --- Race results entry ---
-  function renderRaceSelect() {
-    const sel = document.getElementById('raceSelect');
-    sel.innerHTML = CONFIG.RACES.map(r =>
-      `<option value="${r.round}">${r.flag} R${r.round} — ${r.name} (${r.date})</option>`
-    ).join('');
-    sel.addEventListener('change', renderRaceResultEntry);
-    renderRaceResultEntry();
-  }
-
-  function renderRaceResultEntry() {
-    const round = parseInt(document.getElementById('raceSelect').value);
-    if (!globalData.raceResults) globalData.raceResults = {};
-    const existing = globalData.raceResults[round] || [];
-
-    const F1_POSITIONS = 10;
-    let html = '<h3>Top 10 Pilotos</h3>';
-    for (let i = 0; i < F1_POSITIONS; i++) {
-      html += `
-        <div class="dropdown-slot">
-          <div class="dropdown-pos">${i + 1}</div>
-          <select class="dropdown-select" id="race_driver_${i}">
-            <option value="">— Seleccionar piloto —</option>
-            ${CONFIG.DRIVERS.map(d => `
-              <option value="${d.id}" ${existing[i] === d.id ? 'selected' : ''}>${d.name} (${getTeam(d.team)?.abbr || ''})</option>
-            `).join('')}
-          </select>
-        </div>
-      `;
-    }
-    document.getElementById('raceResultEntry').innerHTML = html;
-  }
-
-  document.getElementById('btnSaveRaceResult').addEventListener('click', async () => {
-    const round = parseInt(document.getElementById('raceSelect').value);
-    if (!globalData.raceResults) globalData.raceResults = {};
-
-    const drivers = [];
-    for (let i = 0; i < 10; i++) {
-      const val = document.getElementById(`race_driver_${i}`).value;
-      if (val) drivers.push(val);
-    }
-
-    globalData.raceResults[round] = drivers;
-
-    try {
-      await Storage.saveGlobalData(globalData);
-      showToast(`Resultado R${round} guardado`);
-    } catch (e) {
-      showToast('Error: ' + e.message);
-    }
-  });
-
   // --- Evento validation ---
   async function renderEventoValidation() {
     const allPlayerData = await Storage.getAllPlayerData();
@@ -369,7 +316,6 @@
     }
 
     loadBonuses();
-    renderRaceSelect();
     renderEventoValidation();
     renderOrdagoVoting();
     renderPenalties();

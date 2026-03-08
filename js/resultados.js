@@ -1,30 +1,80 @@
 // ============================================================
-// Banana Leclerc Challenge 2026 — Resultados (Race Results)
+// Banana Leclerc Challenge 2026 — Resultados (Live F1 Data)
 // ============================================================
+// Fetches real race results from the Jolpica/Ergast F1 API.
 
 (function () {
 
-  // F1 points system for top 10
-  const F1_POINTS = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1];
+  const F1_API = 'https://api.jolpi.ca/ergast/f1';
+  const SEASON = 'current';
 
-  let globalData = {};
+  let races = [];
+  let driverStandings = [];
+  let constructorStandings = [];
   let selectedRound = null;
 
-  // --- Init ---
-  async function init() {
-    await loadAvatars();
-    const state = await Storage.load();
-    globalData = state.global;
+  // --- Map API IDs to our config for photos/colors ---
+  function findOurDriver(apiId, familyName) {
+    for (const d of CONFIG.DRIVERS) {
+      if (apiId.includes(d.id) || d.id === apiId) return d;
+      if (familyName && d.name.toLowerCase().endsWith(familyName.toLowerCase())) return d;
+    }
+    return null;
+  }
 
-    // Default to most recent race with results, or first race
-    if (globalData.raceResults) {
-      const rounds = Object.keys(globalData.raceResults)
-        .map(Number)
-        .filter(r => globalData.raceResults[r] && globalData.raceResults[r].length > 0)
-        .sort((a, b) => b - a);
-      selectedRound = rounds.length > 0 ? rounds[0] : 1;
-    } else {
-      selectedRound = 1;
+  function findOurTeam(apiId) {
+    for (const t of CONFIG.TEAMS) {
+      const norm = t.id.replace(/-/g, '_');
+      if (apiId === norm || apiId === t.id || apiId.includes(norm) || norm.includes(apiId)) return t;
+      if (t.name.toLowerCase().replace(/\s/g, '') === apiId.replace(/_/g, '')) return t;
+    }
+    return null;
+  }
+
+  // --- Fetch from API ---
+  async function fetchRaces() {
+    const resp = await fetch(`${F1_API}/${SEASON}/results.json?limit=500`);
+    if (!resp.ok) throw new Error(`API ${resp.status}`);
+    const data = await resp.json();
+    return data.MRData.RaceTable.Races || [];
+  }
+
+  async function fetchDriverStandings() {
+    const resp = await fetch(`${F1_API}/${SEASON}/driverStandings.json`);
+    if (!resp.ok) return [];
+    const data = await resp.json();
+    const lists = data.MRData.StandingsTable.StandingsLists;
+    return lists && lists.length > 0 ? lists[0].DriverStandings : [];
+  }
+
+  async function fetchConstructorStandings() {
+    const resp = await fetch(`${F1_API}/${SEASON}/constructorStandings.json`);
+    if (!resp.ok) return [];
+    const data = await resp.json();
+    const lists = data.MRData.StandingsTable.StandingsLists;
+    return lists && lists.length > 0 ? lists[0].ConstructorStandings : [];
+  }
+
+  // ==================== INIT ====================
+
+  async function init() {
+    try {
+      [races, driverStandings, constructorStandings] = await Promise.all([
+        fetchRaces(),
+        fetchDriverStandings(),
+        fetchConstructorStandings(),
+      ]);
+    } catch (e) {
+      console.error('Error fetching F1 data:', e);
+      document.getElementById('raceResult').innerHTML =
+        '<p class="text-red">Error cargando datos de F1. Intentalo de nuevo mas tarde.</p>';
+      document.getElementById('driverChampionship').innerHTML = '';
+      document.getElementById('constructorChampionship').innerHTML = '';
+      return;
+    }
+
+    if (races.length > 0) {
+      selectedRound = parseInt(races[races.length - 1].round);
     }
 
     renderRaceTabs();
@@ -37,15 +87,24 @@
 
   function renderRaceTabs() {
     const container = document.getElementById('raceTabs');
-    const raceResults = globalData.raceResults || {};
 
-    container.innerHTML = CONFIG.RACES.map(r => {
-      const hasResult = raceResults[r.round] && raceResults[r.round].length > 0;
+    if (races.length === 0) {
+      container.innerHTML = '';
+      return;
+    }
+
+    // Build tabs from actual API races
+    container.innerHTML = races.map(r => {
+      const round = parseInt(r.round);
+      // Try to find our config race for the flag
+      const configRace = CONFIG.RACES.find(cr => cr.round === round);
+      const flag = configRace ? configRace.flag : '';
+
       return `
-        <button class="race-tab ${r.round === selectedRound ? 'active' : ''} ${!hasResult ? 'race-tab-empty' : ''}"
-          data-round="${r.round}" title="${r.name}">
-          <span class="race-tab-flag">${r.flag}</span>
-          <span class="race-tab-round">R${r.round}</span>
+        <button class="race-tab ${round === selectedRound ? 'active' : ''}"
+          data-round="${round}" title="${r.raceName}">
+          <span class="race-tab-flag">${flag || round}</span>
+          <span class="race-tab-round">R${round}</span>
         </button>
       `;
     }).join('');
@@ -59,52 +118,55 @@
     });
   }
 
-  // ==================== INDIVIDUAL RACE RESULT ====================
+  // ==================== INDIVIDUAL RACE ====================
 
   function renderRaceResult() {
     const el = document.getElementById('raceResult');
-    const race = CONFIG.RACES.find(r => r.round === selectedRound);
-    const raceResults = globalData.raceResults || {};
-    const drivers = raceResults[selectedRound] || [];
 
-    if (!race) { el.innerHTML = ''; return; }
+    if (races.length === 0) {
+      el.innerHTML = '<p class="text-muted">No hay resultados de carrera disponibles para esta temporada todavia.</p>';
+      return;
+    }
 
+    const race = races.find(r => parseInt(r.round) === selectedRound);
+    if (!race) {
+      el.innerHTML = '<p class="text-muted">Carrera no encontrada.</p>';
+      return;
+    }
+
+    const results = race.Results || [];
     const date = new Date(race.date + 'T00:00:00');
     const formatted = date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
 
     let html = `
       <div class="race-result-header">
-        <span class="race-result-flag">${race.flag}</span>
         <div>
-          <span class="race-result-name">${race.name}</span>
-          <span class="race-result-date">Ronda ${race.round} · ${formatted}</span>
+          <span class="race-result-name">${race.raceName}</span>
+          <span class="race-result-date">Ronda ${race.round} · ${formatted} · ${race.Circuit.circuitName}</span>
         </div>
       </div>
     `;
 
-    if (drivers.length === 0) {
-      html += '<p class="text-muted mt-1">Resultado pendiente. El comisario jefe aun no ha introducido este GP.</p>';
-      el.innerHTML = html;
-      return;
-    }
-
     html += '<div class="results-list mt-1">';
-    drivers.forEach((driverId, i) => {
-      const driver = getDriver(driverId);
-      if (!driver) return;
-      const team = getTeam(driver.team);
-      const imgUrl = getDriverImageUrl(driver);
-      const pts = F1_POINTS[i] || 0;
+    results.forEach((r, i) => {
+      const driver = r.Driver;
+      const constructor = r.Constructor;
+      const ourDriver = findOurDriver(driver.driverId, driver.familyName);
+      const ourTeam = findOurTeam(constructor.constructorId);
+      const teamColor = ourTeam ? ourTeam.color : '#666';
+      const imgUrl = ourDriver ? getDriverImageUrl(ourDriver) : '';
+      const pts = parseInt(r.points) || 0;
+      const pos = parseInt(r.position);
 
       html += `
-        <div class="result-row ${i < 3 ? 'result-podium result-podium-' + (i + 1) : ''}">
-          <div class="result-pos" style="background: ${getTeamColor(driver.team)}">${i + 1}</div>
-          ${imgUrl ? `<img src="${imgUrl}" class="result-driver-img" alt="${driver.name}">` : ''}
+        <div class="result-row ${pos <= 3 ? 'result-podium result-podium-' + pos : ''}">
+          <div class="result-pos" style="background: ${teamColor}">${r.position}</div>
+          ${imgUrl ? `<img src="${imgUrl}" class="result-driver-img" alt="${driver.familyName}">` : `<div class="result-driver-placeholder"></div>`}
           <div class="result-info">
-            <span class="result-name">${driver.name}</span>
-            <span class="result-team" style="color: ${getTeamColor(driver.team)}">${team ? team.name : ''}</span>
+            <span class="result-name">${driver.givenName} ${driver.familyName}</span>
+            <span class="result-team" style="color: ${teamColor}">${constructor.name}</span>
           </div>
-          ${team ? renderTeamBadge(team.id, 'sm') : ''}
+          ${ourTeam ? renderTeamBadge(ourTeam.id, 'sm') : `<span class="team-badge-sm" style="background:${teamColor}">${constructor.constructorId.slice(0,3).toUpperCase()}</span>`}
           <span class="result-pts">${pts > 0 ? '+' + pts : ''}</span>
         </div>
       `;
@@ -116,54 +178,35 @@
 
   // ==================== DRIVER CHAMPIONSHIP ====================
 
-  function computeDriverStandings() {
-    const raceResults = globalData.raceResults || {};
-    const standings = {};
-
-    for (const [round, drivers] of Object.entries(raceResults)) {
-      if (!drivers || drivers.length === 0) continue;
-      drivers.forEach((driverId, i) => {
-        if (!standings[driverId]) standings[driverId] = { points: 0, wins: 0, podiums: 0, races: 0 };
-        const pts = F1_POINTS[i] || 0;
-        standings[driverId].points += pts;
-        standings[driverId].races++;
-        if (i === 0) standings[driverId].wins++;
-        if (i < 3) standings[driverId].podiums++;
-      });
-    }
-
-    return Object.entries(standings)
-      .sort((a, b) => b[1].points - a[1].points || b[1].wins - a[1].wins)
-      .map(([id, stats], i) => ({ id, rank: i + 1, ...stats }));
-  }
-
   function renderDriverChampionship() {
     const el = document.getElementById('driverChampionship');
-    const standings = computeDriverStandings();
 
-    if (standings.length === 0) {
-      el.innerHTML = '<p class="text-muted">No hay resultados de carrera todavia.</p>';
+    if (driverStandings.length === 0) {
+      el.innerHTML = '<p class="text-muted">No hay clasificacion de pilotos disponible todavia.</p>';
       return;
     }
 
     let html = '<div class="results-list">';
-    standings.forEach((s) => {
-      const driver = getDriver(s.id);
-      if (!driver) return;
-      const team = getTeam(driver.team);
-      const imgUrl = getDriverImageUrl(driver);
+    driverStandings.forEach((s) => {
+      const driver = s.Driver;
+      const constructor = s.Constructors && s.Constructors[0];
+      const ourDriver = findOurDriver(driver.driverId, driver.familyName);
+      const ourTeam = constructor ? findOurTeam(constructor.constructorId) : null;
+      const teamColor = ourTeam ? ourTeam.color : '#666';
+      const imgUrl = ourDriver ? getDriverImageUrl(ourDriver) : '';
+      const pos = parseInt(s.position);
 
       html += `
         <div class="result-row">
-          <div class="result-pos champ-pos-${s.rank <= 3 ? s.rank : 'n'}">${s.rank}</div>
-          ${imgUrl ? `<img src="${imgUrl}" class="result-driver-img" alt="${driver.name}">` : ''}
+          <div class="result-pos champ-pos-${pos <= 3 ? pos : 'n'}">${s.position}</div>
+          ${imgUrl ? `<img src="${imgUrl}" class="result-driver-img" alt="${driver.familyName}">` : `<div class="result-driver-placeholder"></div>`}
           <div class="result-info">
-            <span class="result-name">${driver.name}</span>
-            <span class="result-team" style="color: ${getTeamColor(driver.team)}">${team ? team.name : ''}</span>
+            <span class="result-name">${driver.givenName} ${driver.familyName}</span>
+            <span class="result-team" style="color: ${teamColor}">${constructor ? constructor.name : ''}</span>
           </div>
           <div class="champ-stats">
             <span class="champ-pts">${s.points}</span>
-            <span class="champ-detail">${s.wins}V · ${s.podiums}P · ${s.races} carreras</span>
+            <span class="champ-detail">${s.wins} victorias</span>
           </div>
         </div>
       `;
@@ -175,58 +218,31 @@
 
   // ==================== CONSTRUCTOR CHAMPIONSHIP ====================
 
-  function computeConstructorStandings() {
-    const raceResults = globalData.raceResults || {};
-    const standings = {};
-
-    for (const [round, drivers] of Object.entries(raceResults)) {
-      if (!drivers || drivers.length === 0) continue;
-      drivers.forEach((driverId, i) => {
-        const driver = getDriver(driverId);
-        if (!driver) return;
-        const teamId = driver.team;
-        if (!standings[teamId]) standings[teamId] = { points: 0, wins: 0, podiums: 0, races: new Set() };
-        const pts = F1_POINTS[i] || 0;
-        standings[teamId].points += pts;
-        standings[teamId].races.add(parseInt(round));
-        if (i === 0) standings[teamId].wins++;
-        if (i < 3) standings[teamId].podiums++;
-      });
-    }
-
-    return Object.entries(standings)
-      .sort((a, b) => b[1].points - a[1].points || b[1].wins - a[1].wins)
-      .map(([id, stats], i) => ({ id, rank: i + 1, points: stats.points, wins: stats.wins, podiums: stats.podiums, races: stats.races.size }));
-  }
-
   function renderConstructorChampionship() {
     const el = document.getElementById('constructorChampionship');
-    const standings = computeConstructorStandings();
 
-    if (standings.length === 0) {
-      el.innerHTML = '<p class="text-muted">No hay resultados de carrera todavia.</p>';
+    if (constructorStandings.length === 0) {
+      el.innerHTML = '<p class="text-muted">No hay clasificacion de constructores disponible todavia.</p>';
       return;
     }
 
     let html = '<div class="results-list">';
-    standings.forEach((s) => {
-      const team = getTeam(s.id);
-      if (!team) return;
-
-      // Find team's drivers
-      const teamDrivers = CONFIG.DRIVERS.filter(d => d.team === s.id).map(d => d.name).join(', ');
+    constructorStandings.forEach((s) => {
+      const constructor = s.Constructor;
+      const ourTeam = findOurTeam(constructor.constructorId);
+      const teamColor = ourTeam ? ourTeam.color : '#666';
+      const pos = parseInt(s.position);
 
       html += `
         <div class="result-row">
-          <div class="result-pos champ-pos-${s.rank <= 3 ? s.rank : 'n'}">${s.rank}</div>
-          ${renderTeamBadge(team.id)}
+          <div class="result-pos champ-pos-${pos <= 3 ? pos : 'n'}">${s.position}</div>
+          ${ourTeam ? renderTeamBadge(ourTeam.id) : `<span class="team-badge" style="background:${teamColor}">${constructor.constructorId.slice(0,3).toUpperCase()}</span>`}
           <div class="result-info">
-            <span class="result-name">${team.name}</span>
-            <span class="result-team" style="color: ${team.color}">${teamDrivers}</span>
+            <span class="result-name">${constructor.name}</span>
           </div>
           <div class="champ-stats">
             <span class="champ-pts">${s.points}</span>
-            <span class="champ-detail">${s.wins}V · ${s.podiums}P · ${s.races} carreras</span>
+            <span class="champ-detail">${s.wins} victorias</span>
           </div>
         </div>
       `;
