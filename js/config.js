@@ -76,9 +76,9 @@ const CONFIG = {
   // --- Fases ---
   PHASES: [
     { id: 1, label: 'Fase 1', races: '1–6',      deadline: '2026-03-05' },  // 3 días antes de Australia (8 mar)
-    { id: 2, label: 'Fase 2', races: '7–12',     deadline: '2026-05-28' },  // 3 días antes de Emilia Romaña (31 may)
-    { id: 3, label: 'Fase 3', races: '13–18',    deadline: '2026-07-30' },  // 3 días antes de Bélgica (2 ago)
-    { id: 4, label: 'Fase 4', races: '19–Final', deadline: '2026-10-15' },  // 3 días antes de EE.UU. (18 oct)
+    { id: 2, label: 'Fase 2', races: '7–12',     deadline: '2026-05-21' },  // 3 días antes de Canadá (24 may)
+    { id: 3, label: 'Fase 3', races: '13–18',    deadline: '2026-07-23' },  // 3 días antes de Hungría (26 jul)
+    { id: 4, label: 'Fase 4', races: '19–Final', deadline: '2026-10-22' },  // 3 días antes de EE.UU. (25 oct)
   ],
 
   // --- Puntuación por fase ---
@@ -121,30 +121,30 @@ const CONFIG = {
     oscar:   { desc: 'Voto sistemáticamente opuesto a mamá: -5 / Crítica gratuita a pilotos protegidos: -10', points: -5 },
   },
 
-  // --- Calendario 2026 (simplificado) ---
+  // --- Calendario 2026 (oficial) ---
   RACES: [
     { round: 1,  name: 'Australia',        date: '2026-03-08', flag: '🇦🇺' },
-    { round: 2,  name: 'China',            date: '2026-03-29', flag: '🇨🇳' },
-    { round: 3,  name: 'Japón',            date: '2026-04-05', flag: '🇯🇵' },
-    { round: 4,  name: 'Bahréin',          date: '2026-04-19', flag: '🇧🇭' },
-    { round: 5,  name: 'Arabia Saudí',     date: '2026-05-03', flag: '🇸🇦' },
-    { round: 6,  name: 'Miami',            date: '2026-05-17', flag: '🇺🇸' },
-    { round: 7,  name: 'Emilia Romaña',    date: '2026-05-31', flag: '🇮🇹' },
+    { round: 2,  name: 'China',            date: '2026-03-15', flag: '🇨🇳' },
+    { round: 3,  name: 'Japón',            date: '2026-03-29', flag: '🇯🇵' },
+    { round: 4,  name: 'Bahréin',          date: '2026-04-12', flag: '🇧🇭' },
+    { round: 5,  name: 'Arabia Saudí',     date: '2026-04-19', flag: '🇸🇦' },
+    { round: 6,  name: 'Miami',            date: '2026-05-03', flag: '🇺🇸' },
+    { round: 7,  name: 'Canadá',           date: '2026-05-24', flag: '🇨🇦' },
     { round: 8,  name: 'Mónaco',           date: '2026-06-07', flag: '🇲🇨' },
-    { round: 9,  name: 'España',           date: '2026-06-21', flag: '🇪🇸' },
-    { round: 10, name: 'Canadá',           date: '2026-07-05', flag: '🇨🇦' },
-    { round: 11, name: 'Austria',          date: '2026-07-19', flag: '🇦🇹' },
-    { round: 12, name: 'Gran Bretaña',     date: '2026-07-26', flag: '🇬🇧' },
-    { round: 13, name: 'Bélgica',          date: '2026-08-02', flag: '🇧🇪' },
-    { round: 14, name: 'Hungría',          date: '2026-08-16', flag: '🇭🇺' },
-    { round: 15, name: 'Países Bajos',     date: '2026-08-30', flag: '🇳🇱' },
-    { round: 16, name: 'Italia',           date: '2026-09-06', flag: '🇮🇹' },
-    { round: 17, name: 'Azerbaiyán',       date: '2026-09-20', flag: '🇦🇿' },
-    { round: 18, name: 'Singapur',         date: '2026-10-04', flag: '🇸🇬' },
-    { round: 19, name: 'EE.UU.',           date: '2026-10-18', flag: '🇺🇸' },
-    { round: 20, name: 'México',           date: '2026-10-25', flag: '🇲🇽' },
+    { round: 9,  name: 'Barcelona',        date: '2026-06-14', flag: '🇪🇸' },
+    { round: 10, name: 'Austria',          date: '2026-06-28', flag: '🇦🇹' },
+    { round: 11, name: 'Gran Bretaña',     date: '2026-07-05', flag: '🇬🇧' },
+    { round: 12, name: 'Bélgica',          date: '2026-07-19', flag: '🇧🇪' },
+    { round: 13, name: 'Hungría',          date: '2026-07-26', flag: '🇭🇺' },
+    { round: 14, name: 'Países Bajos',     date: '2026-08-23', flag: '🇳🇱' },
+    { round: 15, name: 'Italia',           date: '2026-09-06', flag: '🇮🇹' },
+    { round: 16, name: 'Madrid',           date: '2026-09-14', flag: '🇪🇸' },
+    { round: 17, name: 'Azerbaiyán',       date: '2026-09-26', flag: '🇦🇿' },
+    { round: 18, name: 'Singapur',         date: '2026-10-11', flag: '🇸🇬' },
+    { round: 19, name: 'EE.UU.',           date: '2026-10-25', flag: '🇺🇸' },
+    { round: 20, name: 'México',           date: '2026-11-01', flag: '🇲🇽' },
     { round: 21, name: 'Brasil',           date: '2026-11-08', flag: '🇧🇷' },
-    { round: 22, name: 'Las Vegas',        date: '2026-11-22', flag: '🇺🇸' },
+    { round: 22, name: 'Las Vegas',        date: '2026-11-21', flag: '🇺🇸' },
     { round: 23, name: 'Catar',            date: '2026-11-29', flag: '🇶🇦' },
     { round: 24, name: 'Abu Dabi',         date: '2026-12-06', flag: '🇦🇪' },
   ],
