@@ -23,7 +23,6 @@ f1banana/
 │   ├── predicciones.js     ← Prediction form logic & driver/team pickers
 │   ├── clasificacion.js    ← Scoring engine & leaderboard rendering
 │   └── admin.js            ← Admin panel: results entry, bonuses, penalties
-├── data/results-dev.json   ← Mock data for testing
 └── CLAUDE.md
 ```
 
@@ -41,7 +40,9 @@ f1banana/
 - Evento: 10 pts if correct (max 1 per phase)
 - Órdago: 25/15/5/0 pts (family vote at end of season)
 - Collective bonus: +14 all if Alonso wins, +10 all if Sainz wins
-- Individual penalties: per-player funny rules in config.js
+- Gasly chef: doubles everyone's phase subtotal (once per phase, `bonuses.gasly_chef_phases` array)
+- Individual penalties: per-player funny rules in config.js (Oscar has a second -10 type, `{type: 'critica'}`)
+- Phase results (real Top 5/Top 3) are entered in the admin panel — manually or imported from the Jolpica F1 API at the phase's closing round
 
 ## Development
 1. Open `index.html` in browser (file:// works, dev mode uses localStorage)

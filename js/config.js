@@ -154,6 +154,14 @@ const CONFIG = {
 };
 
 // Helpers
+// Escapa texto libre de los jugadores antes de meterlo en innerHTML,
+// para que un evento tipo "<script>..." no rompa la app de todos
+function escapeHtml(str) {
+  return String(str == null ? '' : str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
 function getDriver(id) {
   return CONFIG.DRIVERS.find(d => d.id === id);
 }
@@ -218,11 +226,6 @@ function getDriverImageUrl(driver) {
   return '';
 }
 
-// Team logo URL
-function getTeamLogoUrl(team) {
-  return `https://media.formula1.com/content/dam/fom-website/teams/2025/${team.id}-logo.png`;
-}
-
 // --- Avatar system ---
 // Avatars can be emojis (string) or images (base64 data URL starting with "data:")
 // Uses a sync cache (_avatarCache) populated from Storage.load() at init.
@@ -267,7 +270,7 @@ async function setPlayerStatus(playerId, value) {
 function renderPlayerStatus(playerId) {
   const status = getPlayerStatus(playerId);
   if (!status) return '';
-  return `<span class="player-status"> — ${status}</span>`;
+  return `<span class="player-status"> — ${escapeHtml(status)}</span>`;
 }
 
 function isAvatarImage(avatar) {
@@ -277,9 +280,9 @@ function isAvatarImage(avatar) {
 function renderAvatar(playerId, sizeClass) {
   const avatar = getPlayerAvatar(playerId);
   if (isAvatarImage(avatar)) {
-    return `<img src="${avatar}" alt="avatar" class="avatar-img ${sizeClass || ''}" onclick="openAvatarLightbox(this.src)" style="cursor:zoom-in">`;
+    return `<img src="${escapeHtml(avatar)}" alt="avatar" class="avatar-img ${sizeClass || ''}" onclick="openAvatarLightbox(this.src)" style="cursor:zoom-in">`;
   }
-  return `<span class="avatar-emoji ${sizeClass || ''}">${avatar}</span>`;
+  return `<span class="avatar-emoji ${sizeClass || ''}">${escapeHtml(avatar)}</span>`;
 }
 
 function openAvatarLightbox(src) {
@@ -424,19 +427,6 @@ function clearSessionPlayer() {
   document.cookie = 'blc_player=;path=/;max-age=0';
   sessionStorage.removeItem('blc_player');
 }
-
-// --- Daily reload: force one refresh per day to pick up changes ---
-(function dailyReload() {
-  const key = 'blc_last_reload';
-  const today = new Date().toISOString().slice(0, 10);
-  const last = localStorage.getItem(key);
-  if (last && last !== today) {
-    localStorage.setItem(key, today);
-    location.reload();
-  } else {
-    localStorage.setItem(key, today);
-  }
-})();
 
 // --- Phase lock helper ---
 // Returns true if the phase is locked for a player (deadline passed + no admin unlock)

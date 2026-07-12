@@ -11,11 +11,11 @@
     <div class="header-inner">
       <h1><span class="accent">Banana</span> Leclerc <span class="subtitle">Challenge 2026</span></h1>
       <nav class="nav">
-        <a href="index.html">Start</a>
-        <a href="predicciones.html">Prediction</a>
-        <a href="clasificacion.html">Rank</a>
-        <a href="resultados.html">Results</a>
-        <a href="reglas.html" class="active">Help</a>
+        <a href="index.html">Inicio</a>
+        <a href="predicciones.html">Predicciones</a>
+        <a href="clasificacion.html">Clasificación</a>
+        <a href="resultados.html">Resultados</a>
+        <a href="reglas.html" class="active">Reglas</a>
         <a href="admin.html">Admin</a>
       </nav>
     </div>
@@ -234,8 +234,8 @@
           <div class="rules-bonus-icon">👨‍🍳</div>
           <div>
             <strong>Gasly chef en podio</strong>
-            <br><span class="text-yellow">Doble puntos</span> de la fase, por carrera
-            <br><span class="text-muted" style="font-size:0.75rem">Si Pierre Gasly sube al podio con look de chef francés (o cualquier accesorio culinario sospechoso), se doblan los puntos de esa fase para todos. Oui chef.</span>
+            <br><span class="text-yellow">Doble puntos</span> de la fase (una vez por fase)
+            <br><span class="text-muted" style="font-size:0.75rem">Si Pierre Gasly sube al podio con look de chef francés (o cualquier accesorio culinario sospechoso), se doblan los puntos de esa fase para todos. Máximo un doblado por fase, que la cocina francesa es potente. Oui chef.</span>
           </div>
         </div>
         <div class="rules-bonus-card">
@@ -351,8 +351,8 @@
     <div class="ticker-track"><div class="ticker-content" id="tickerContent"></div></div>
   </div>
 
-  <script src="js/config.js"></script>
-  <script src="js/storage.js"></script>
+  <script src="js/config.js?v=4"></script>
+  <script src="js/storage.js?v=4"></script>
   <script>
     (function(){
       const msgs = [...F1_TICKER_MESSAGES].sort(() => Math.random() - 0.5);

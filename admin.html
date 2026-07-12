@@ -11,11 +11,11 @@
     <div class="header-inner">
       <h1><span class="accent">Banana</span> Leclerc <span class="subtitle">Challenge 2026</span></h1>
       <nav class="nav">
-        <a href="index.html">Start</a>
-        <a href="predicciones.html">Prediction</a>
-        <a href="clasificacion.html">Rank</a>
-        <a href="resultados.html">Results</a>
-        <a href="reglas.html">Help</a>
+        <a href="index.html">Inicio</a>
+        <a href="predicciones.html">Predicciones</a>
+        <a href="clasificacion.html">Clasificación</a>
+        <a href="resultados.html">Resultados</a>
+        <a href="reglas.html">Reglas</a>
         <a href="admin.html" class="active">Admin</a>
       </nav>
     </div>
@@ -40,6 +40,19 @@
 
     <!-- Admin content (hidden until PIN) -->
     <div id="adminContent" class="hidden">
+
+      <!-- Phase results -->
+      <div class="card">
+        <h2>Resultados de Fase</h2>
+        <p class="text-secondary mb-2" style="font-size:0.8rem">Top 5 pilotos y Top 3 constructores <strong>reales</strong> al cierre de cada fase. Sin esto no hay puntos, comisario.</p>
+        <div class="phase-tabs" id="resultsPhaseTabs"></div>
+        <div id="resultsSection"></div>
+        <div class="flex gap-1 mt-2" style="flex-wrap:wrap">
+          <button class="btn btn-secondary" id="btnImportResults">📡 Importar de la API</button>
+          <button class="btn btn-primary" id="btnSaveResults">Guardar resultados</button>
+        </div>
+        <p class="text-muted mt-1" style="font-size:0.75rem">El botón de importar rellena con la clasificación real del campeonato al cierre de la fase (API de F1). Revisa y guarda.</p>
+      </div>
 
       <!-- Evento validation -->
       <div class="card">
@@ -74,8 +87,13 @@
             <input type="number" id="maxWall" min="0" max="24" value="0" style="width:60px">
           </div>
           <div class="flex items-center justify-between">
-            <span>Gasly chef en podio (carreras):</span>
-            <input type="number" id="gaslyChef" min="0" max="24" value="0" style="width:60px">
+            <span>Gasly chef en podio (dobla los puntos de esa fase):</span>
+            <span style="display:flex; gap:0.6rem">
+              <label><input type="checkbox" id="gaslyPhase_1"> F1</label>
+              <label><input type="checkbox" id="gaslyPhase_2"> F2</label>
+              <label><input type="checkbox" id="gaslyPhase_3"> F3</label>
+              <label><input type="checkbox" id="gaslyPhase_4"> F4</label>
+            </span>
           </div>
           <div class="flex items-center justify-between">
             <span>Yuki grita por radio (carreras):</span>
@@ -135,15 +153,14 @@
     <div class="ticker-track"><div class="ticker-content" id="tickerContent"></div></div>
   </div>
 
-  <script src="js/config.js"></script>
-  <script src="js/storage.js"></script>
+  <script src="js/config.js?v=4"></script>
+  <script src="js/storage.js?v=4"></script>
   <script>
     document.getElementById('btnForceRefresh').addEventListener('click', () => {
-      localStorage.removeItem('blc_last_reload');
-      location.reload(true);
+      location.reload();
     });
   </script>
-  <script src="js/admin.js"></script>
+  <script src="js/admin.js?v=4"></script>
   <script>
     (function(){
       const msgs = [...F1_TICKER_MESSAGES].sort(() => Math.random() - 0.5);
