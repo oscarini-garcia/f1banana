@@ -11,11 +11,11 @@
     <div class="header-inner">
       <h1><span class="accent">Banana</span> Leclerc <span class="subtitle">Challenge 2026</span></h1>
       <nav class="nav">
-        <a href="index.html">Start</a>
-        <a href="predicciones.html">Prediction</a>
-        <a href="clasificacion.html">Rank</a>
-        <a href="resultados.html">Results</a>
-        <a href="reglas.html" class="active">Help</a>
+        <a href="index.html">Inicio</a>
+        <a href="predicciones.html">Predicciones</a>
+        <a href="clasificacion.html">Clasificación</a>
+        <a href="resultados.html">Resultados</a>
+        <a href="reglas.html" class="active">Reglas</a>
         <a href="admin.html">Admin</a>
       </nav>
     </div>
@@ -40,14 +40,15 @@
     <div class="card">
       <h2>Estructura de la Temporada</h2>
       <p class="text-secondary mb-2" style="font-size:0.85rem; line-height:1.8">
-        La temporada 2026 tiene <strong class="text-yellow">24 carreras</strong> divididas en <strong class="text-yellow">4 fases</strong>.
+        La temporada 2026 tiene <strong class="text-yellow">22 carreras</strong> divididas en <strong class="text-yellow">4 fases</strong>.
+        <em>(Eran 24, pero Baréin y Arabia Saudí cayeron por la guerra. Hasta la FIA tiene mejores excusas que tú.)</em>
         Cada fase es una oportunidad de redimirte o de hundirte aún más. Tú eliges.
       </p>
       <div class="rules-grid">
         <div class="rules-phase-card">
           <div class="rules-phase-number">1</div>
           <div>
-            <strong>Fase 1</strong> — Carreras 1 a 6
+            <strong>Fase 1</strong> — Carreras 1 a 4
             <br><span class="text-muted">Australia → Miami</span>
             <br><span class="text-yellow" style="font-size:0.75rem">Puntos máximos por posición. Aquí se cocinan los puntos gordos.</span>
           </div>
@@ -55,23 +56,23 @@
         <div class="rules-phase-card">
           <div class="rules-phase-number">2</div>
           <div>
-            <strong>Fase 2</strong> — Carreras 7 a 12
-            <br><span class="text-muted">Emilia Romaña → Gran Bretaña</span>
+            <strong>Fase 2</strong> — Carreras 5 a 10
+            <br><span class="text-muted">Canadá → Bélgica</span>
             <br><span class="text-yellow" style="font-size:0.75rem">Puntos algo menores. La cosa se pone seria.</span>
           </div>
         </div>
         <div class="rules-phase-card">
           <div class="rules-phase-number">3</div>
           <div>
-            <strong>Fase 3</strong> — Carreras 13 a 18
-            <br><span class="text-muted">Bélgica → Singapur</span>
+            <strong>Fase 3</strong> — Carreras 11 a 16
+            <br><span class="text-muted">Hungría → Singapur</span>
             <br><span class="text-yellow" style="font-size:0.75rem">Puntos moderados. Aquí empieza el sufrimiento de verdad.</span>
           </div>
         </div>
         <div class="rules-phase-card">
           <div class="rules-phase-number">4</div>
           <div>
-            <strong>Fase 4</strong> — Carreras 19 a 24
+            <strong>Fase 4</strong> — Carreras 17 a 22
             <br><span class="text-muted">EE.UU. → Abu Dabi</span>
             <br><span class="text-yellow" style="font-size:0.75rem">Puntos mínimos. Pero un órdago puede cambiar la historia.</span>
           </div>
@@ -233,8 +234,8 @@
           <div class="rules-bonus-icon">👨‍🍳</div>
           <div>
             <strong>Gasly chef en podio</strong>
-            <br><span class="text-yellow">Doble puntos</span> de la fase, por carrera
-            <br><span class="text-muted" style="font-size:0.75rem">Si Pierre Gasly sube al podio con look de chef francés (o cualquier accesorio culinario sospechoso), se doblan los puntos de esa fase para todos. Oui chef.</span>
+            <br><span class="text-yellow">Doble puntos</span> de la fase (una vez por fase)
+            <br><span class="text-muted" style="font-size:0.75rem">Si Pierre Gasly sube al podio con look de chef francés (o cualquier accesorio culinario sospechoso), se doblan los puntos de esa fase para todos. Máximo un doblado por fase, que la cocina francesa es potente. Oui chef.</span>
           </div>
         </div>
         <div class="rules-bonus-card">
@@ -350,8 +351,8 @@
     <div class="ticker-track"><div class="ticker-content" id="tickerContent"></div></div>
   </div>
 
-  <script src="js/config.js"></script>
-  <script src="js/storage.js"></script>
+  <script src="js/config.js?v=4"></script>
+  <script src="js/storage.js?v=4"></script>
   <script>
     (function(){
       const msgs = [...F1_TICKER_MESSAGES].sort(() => Math.random() - 0.5);

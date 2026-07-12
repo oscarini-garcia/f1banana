@@ -74,11 +74,14 @@ const CONFIG = {
   ],
 
   // --- Fases ---
+  // Los deadlines no cambian con la cancelación de Baréin/Arabia Saudí:
+  // siguen anclados 3 días antes de Australia, Canadá, Hungría y EE.UU.
+  // Solo se renumeran los rangos de rondas (fase 1 tuvo 4 carreras).
   PHASES: [
-    { id: 1, label: 'Fase 1', races: '1–6',      deadline: '2026-03-05' },  // 3 días antes de Australia (8 mar)
-    { id: 2, label: 'Fase 2', races: '7–12',     deadline: '2026-05-21' },  // 3 días antes de Canadá (24 may)
-    { id: 3, label: 'Fase 3', races: '13–18',    deadline: '2026-07-23' },  // 3 días antes de Hungría (26 jul)
-    { id: 4, label: 'Fase 4', races: '19–Final', deadline: '2026-10-22' },  // 3 días antes de EE.UU. (25 oct)
+    { id: 1, label: 'Fase 1', races: '1–4',      deadline: '2026-03-05' },  // 3 días antes de Australia (8 mar)
+    { id: 2, label: 'Fase 2', races: '5–10',     deadline: '2026-05-21' },  // 3 días antes de Canadá (24 may)
+    { id: 3, label: 'Fase 3', races: '11–16',    deadline: '2026-07-23' },  // 3 días antes de Hungría (26 jul)
+    { id: 4, label: 'Fase 4', races: '17–Final', deadline: '2026-10-22' },  // 3 días antes de EE.UU. (25 oct)
   ],
 
   // --- Puntuación por fase ---
@@ -121,36 +124,44 @@ const CONFIG = {
     oscar:   { desc: 'Voto sistemáticamente opuesto a mamá: -5 / Crítica gratuita a pilotos protegidos: -10', points: -5 },
   },
 
-  // --- Calendario 2026 (oficial) ---
+  // --- Calendario 2026 (actualizado julio 2026) ---
+  // Baréin y Arabia Saudí cancelados por la guerra en Oriente Medio;
+  // quedan 22 carreras con las rondas renumeradas (igual que la API de F1).
   RACES: [
     { round: 1,  name: 'Australia',        date: '2026-03-08', flag: '🇦🇺' },
     { round: 2,  name: 'China',            date: '2026-03-15', flag: '🇨🇳' },
     { round: 3,  name: 'Japón',            date: '2026-03-29', flag: '🇯🇵' },
-    { round: 4,  name: 'Bahréin',          date: '2026-04-12', flag: '🇧🇭' },
-    { round: 5,  name: 'Arabia Saudí',     date: '2026-04-19', flag: '🇸🇦' },
-    { round: 6,  name: 'Miami',            date: '2026-05-03', flag: '🇺🇸' },
-    { round: 7,  name: 'Canadá',           date: '2026-05-24', flag: '🇨🇦' },
-    { round: 8,  name: 'Mónaco',           date: '2026-06-07', flag: '🇲🇨' },
-    { round: 9,  name: 'Barcelona',        date: '2026-06-14', flag: '🇪🇸' },
-    { round: 10, name: 'Austria',          date: '2026-06-28', flag: '🇦🇹' },
-    { round: 11, name: 'Gran Bretaña',     date: '2026-07-05', flag: '🇬🇧' },
-    { round: 12, name: 'Bélgica',          date: '2026-07-19', flag: '🇧🇪' },
-    { round: 13, name: 'Hungría',          date: '2026-07-26', flag: '🇭🇺' },
-    { round: 14, name: 'Países Bajos',     date: '2026-08-23', flag: '🇳🇱' },
-    { round: 15, name: 'Italia',           date: '2026-09-06', flag: '🇮🇹' },
-    { round: 16, name: 'Madrid',           date: '2026-09-14', flag: '🇪🇸' },
-    { round: 17, name: 'Azerbaiyán',       date: '2026-09-26', flag: '🇦🇿' },
-    { round: 18, name: 'Singapur',         date: '2026-10-11', flag: '🇸🇬' },
-    { round: 19, name: 'EE.UU.',           date: '2026-10-25', flag: '🇺🇸' },
-    { round: 20, name: 'México',           date: '2026-11-01', flag: '🇲🇽' },
-    { round: 21, name: 'Brasil',           date: '2026-11-08', flag: '🇧🇷' },
-    { round: 22, name: 'Las Vegas',        date: '2026-11-21', flag: '🇺🇸' },
-    { round: 23, name: 'Catar',            date: '2026-11-29', flag: '🇶🇦' },
-    { round: 24, name: 'Abu Dabi',         date: '2026-12-06', flag: '🇦🇪' },
+    { round: 4,  name: 'Miami',            date: '2026-05-03', flag: '🇺🇸' },
+    { round: 5,  name: 'Canadá',           date: '2026-05-24', flag: '🇨🇦' },
+    { round: 6,  name: 'Mónaco',           date: '2026-06-07', flag: '🇲🇨' },
+    { round: 7,  name: 'Barcelona',        date: '2026-06-14', flag: '🇪🇸' },
+    { round: 8,  name: 'Austria',          date: '2026-06-28', flag: '🇦🇹' },
+    { round: 9,  name: 'Gran Bretaña',     date: '2026-07-05', flag: '🇬🇧' },
+    { round: 10, name: 'Bélgica',          date: '2026-07-19', flag: '🇧🇪' },
+    { round: 11, name: 'Hungría',          date: '2026-07-26', flag: '🇭🇺' },
+    { round: 12, name: 'Países Bajos',     date: '2026-08-23', flag: '🇳🇱' },
+    { round: 13, name: 'Italia',           date: '2026-09-06', flag: '🇮🇹' },
+    { round: 14, name: 'Madrid',           date: '2026-09-13', flag: '🇪🇸' },
+    { round: 15, name: 'Azerbaiyán',       date: '2026-09-27', flag: '🇦🇿' },
+    { round: 16, name: 'Singapur',         date: '2026-10-11', flag: '🇸🇬' },
+    { round: 17, name: 'EE.UU.',           date: '2026-10-25', flag: '🇺🇸' },
+    { round: 18, name: 'México',           date: '2026-11-01', flag: '🇲🇽' },
+    { round: 19, name: 'Brasil',           date: '2026-11-08', flag: '🇧🇷' },
+    { round: 20, name: 'Las Vegas',        date: '2026-11-21', flag: '🇺🇸' },
+    { round: 21, name: 'Catar',            date: '2026-11-29', flag: '🇶🇦' },
+    { round: 22, name: 'Abu Dabi',         date: '2026-12-06', flag: '🇦🇪' },
   ],
 };
 
 // Helpers
+// Escapa texto libre de los jugadores antes de meterlo en innerHTML,
+// para que un evento tipo "<script>..." no rompa la app de todos
+function escapeHtml(str) {
+  return String(str == null ? '' : str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
 function getDriver(id) {
   return CONFIG.DRIVERS.find(d => d.id === id);
 }
@@ -165,9 +176,9 @@ function getTeamColor(teamId) {
 }
 
 function getPhaseForRound(round) {
-  if (round <= 6)  return 1;
-  if (round <= 12) return 2;
-  if (round <= 18) return 3;
+  if (round <= 4)  return 1;
+  if (round <= 10) return 2;
+  if (round <= 16) return 3;
   return 4;
 }
 
@@ -215,11 +226,6 @@ function getDriverImageUrl(driver) {
   return '';
 }
 
-// Team logo URL
-function getTeamLogoUrl(team) {
-  return `https://media.formula1.com/content/dam/fom-website/teams/2025/${team.id}-logo.png`;
-}
-
 // --- Avatar system ---
 // Avatars can be emojis (string) or images (base64 data URL starting with "data:")
 // Uses a sync cache (_avatarCache) populated from Storage.load() at init.
@@ -264,7 +270,7 @@ async function setPlayerStatus(playerId, value) {
 function renderPlayerStatus(playerId) {
   const status = getPlayerStatus(playerId);
   if (!status) return '';
-  return `<span class="player-status"> — ${status}</span>`;
+  return `<span class="player-status"> — ${escapeHtml(status)}</span>`;
 }
 
 function isAvatarImage(avatar) {
@@ -274,9 +280,9 @@ function isAvatarImage(avatar) {
 function renderAvatar(playerId, sizeClass) {
   const avatar = getPlayerAvatar(playerId);
   if (isAvatarImage(avatar)) {
-    return `<img src="${avatar}" alt="avatar" class="avatar-img ${sizeClass || ''}" onclick="openAvatarLightbox(this.src)" style="cursor:zoom-in">`;
+    return `<img src="${escapeHtml(avatar)}" alt="avatar" class="avatar-img ${sizeClass || ''}" onclick="openAvatarLightbox(this.src)" style="cursor:zoom-in">`;
   }
-  return `<span class="avatar-emoji ${sizeClass || ''}">${avatar}</span>`;
+  return `<span class="avatar-emoji ${sizeClass || ''}">${escapeHtml(avatar)}</span>`;
 }
 
 function openAvatarLightbox(src) {
@@ -397,7 +403,15 @@ document.querySelectorAll('.build-time').forEach(el => {
 });
 
 // --- Session via cookie (persists across browser restarts) ---
+// Un link personal (?player=amaya) reclama el dispositivo: la identidad
+// queda guardada y sobrevive a abrir la app después sin el link.
+// Ids desconocidos se ignoran para que nadie entre como usuario fantasma.
 function getSessionPlayer() {
+  const urlId = new URLSearchParams(window.location.search).get('player');
+  if (urlId && CONFIG.PLAYERS.some(p => p.id === urlId)) {
+    setSessionPlayer(urlId);
+    return urlId;
+  }
   const match = document.cookie.match(/(?:^|; )blc_player=([^;]*)/);
   if (match) return decodeURIComponent(match[1]);
   // Migrate from sessionStorage if exists
@@ -413,19 +427,6 @@ function clearSessionPlayer() {
   document.cookie = 'blc_player=;path=/;max-age=0';
   sessionStorage.removeItem('blc_player');
 }
-
-// --- Daily reload: force one refresh per day to pick up changes ---
-(function dailyReload() {
-  const key = 'blc_last_reload';
-  const today = new Date().toISOString().slice(0, 10);
-  const last = localStorage.getItem(key);
-  if (last && last !== today) {
-    localStorage.setItem(key, today);
-    location.reload();
-  } else {
-    localStorage.setItem(key, today);
-  }
-})();
 
 // --- Phase lock helper ---
 // Returns true if the phase is locked for a player (deadline passed + no admin unlock)

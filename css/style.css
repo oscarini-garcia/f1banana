@@ -1906,3 +1906,56 @@ body {
   .race-tab { min-width: 40px; padding: 0.3rem 0.4rem; }
   .race-tab-flag { font-size: 0.95rem; }
 }
+
+/* ============================================================
+   SYNC BADGE & PERSONAL LINKS
+   ============================================================ */
+
+/* Fixed en la esquina: fuera del flujo del header, que en móvil es columna */
+.sync-badge {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 200;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  line-height: 1;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
+.sync-badge.sync-syncing { animation: sync-spin 1s linear infinite; }
+
+@keyframes sync-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.personal-link-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.personal-link-row .personal-link-name {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 110px;
+  font-size: 0.85rem;
+}
+
+.personal-link-row input {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.75rem;
+  color: var(--text-secondary, #aaa);
+}

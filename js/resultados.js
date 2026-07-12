@@ -22,7 +22,11 @@
     return null;
   }
 
+  // Ids de la API que no se deducen del nuestro (Racing Bulls es 'rb', Audi hereda Sauber)
+  const API_TEAM_ALIASES = { rb: 'racing-bulls', kick_sauber: 'audi', sauber: 'audi' };
+
   function findOurTeam(apiId) {
+    if (API_TEAM_ALIASES[apiId]) return getTeam(API_TEAM_ALIASES[apiId]);
     for (const t of CONFIG.TEAMS) {
       const norm = t.id.replace(/-/g, '_');
       if (apiId === norm || apiId === t.id || apiId.includes(norm) || norm.includes(apiId)) return t;

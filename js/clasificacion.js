@@ -85,16 +85,14 @@
     collective += (bonuses.sainz_wins || 0) * CONFIG.COLLECTIVE_BONUSES.sainz_win;
 
     // Special bonuses (applied to all players equally)
+    // Gasly chef no suma aquí: dobla los puntos de la fase (ver calculatePlayerTotal)
     const maxWallCount = Array.isArray(bonuses.max_wall) ? bonuses.max_wall.length : (bonuses.max_wall || 0);
-    const gaslyChefCount = Array.isArray(bonuses.gasly_chef) ? bonuses.gasly_chef.length : (bonuses.gasly_chef || 0);
     const yukiRadioCount = Array.isArray(bonuses.yuki_radio) ? bonuses.yuki_radio.length : (bonuses.yuki_radio || 0);
 
     const special = (maxWallCount * CONFIG.SPECIAL_BONUSES.max_wall) +
                     (yukiRadioCount * CONFIG.SPECIAL_BONUSES.yuki_radio);
-    // Gasly chef = "double" — we'll treat as +5 per occurrence for simplicity
-    const gaslyBonus = gaslyChefCount * 5;
 
-    return { collective, special: special + gaslyBonus };
+    return { collective, special };
   }
 
   function calculatePenalties(globalData, playerId) {
@@ -127,6 +125,9 @@
       total: 0,
     };
 
+    // Fases en las que Gasly subió al podio con look chef → puntos de fase x2
+    const gaslyPhases = (globalData.bonuses && globalData.bonuses.gasly_chef_phases) || [];
+
     for (let phase = 1; phase <= 4; phase++) {
       const phaseKey = `phase${phase}`;
       const predictions = playerData[phaseKey] || {};
@@ -140,11 +141,15 @@
       );
       const eventoScore = calculateEventoScore(globalData, playerId, phase);
 
+      const doubled = gaslyPhases.includes(phase);
+      const baseSubtotal = driverScore + constructorScore + eventoScore;
+
       breakdown.phases[phase] = {
         drivers: driverScore,
         constructors: constructorScore,
         evento: eventoScore,
-        subtotal: driverScore + constructorScore + eventoScore,
+        doubled,
+        subtotal: doubled ? baseSubtotal * 2 : baseSubtotal,
       };
       breakdown.evento += eventoScore;
     }
@@ -207,7 +212,7 @@
             <div class="lb-avatar">${renderAvatar(p.id, 'avatar-md')}</div>
             <div class="lb-name-wrap">
               <span class="lb-name">${p.name}</span>
-              ${getPlayerStatus(p.id) ? `<span class="lb-status"> — ${getPlayerStatus(p.id)}</span>` : ''}
+              ${getPlayerStatus(p.id) ? `<span class="lb-status"> — ${escapeHtml(getPlayerStatus(p.id))}</span>` : ''}
             </div>
             <span class="lb-total">${s.total}</span>
           </div>
@@ -269,7 +274,7 @@
       const ps = s.phases[phase] || { drivers: 0, constructors: 0, evento: 0, subtotal: 0 };
       html += `
         <div class="breakdown-item">
-          <div class="label">Fase ${phase}</div>
+          <div class="label">Fase ${phase}${ps.doubled ? ' 👨‍🍳×2' : ''}</div>
           <div class="value">${ps.subtotal}</div>
           <div class="text-muted" style="font-size:0.7rem">
             P: ${ps.drivers} · C: ${ps.constructors} · E: ${ps.evento}
@@ -303,7 +308,7 @@
       html += `<div class="mt-2" style="font-size:0.85rem">`;
       // Órdago: solo visible para el propio jugador
       if (selectedPlayerId === currentUser) {
-        html += `<p><strong>Órdago:</strong> ${pd.ordago || '<em>No definido</em>'}</p>`;
+        html += `<p><strong>Órdago:</strong> ${pd.ordago ? escapeHtml(pd.ordago) : '<em>No definido</em>'}</p>`;
       } else {
         html += `<p><strong>Órdago:</strong> <em class="text-muted">Secreto hasta final de temporada</em></p>`;
       }
@@ -323,7 +328,7 @@
               const t = getTeam(id);
               return t ? t.name : id;
             }).join(', ')}</p>`;
-            html += `<p class="text-muted">Evento: ${phaseData.evento || '—'}</p>`;
+            html += `<p class="text-muted">Evento: ${phaseData.evento ? escapeHtml(phaseData.evento) : '—'}</p>`;
           } else {
             html += `<p class="text-muted"><em>Secreto hasta ${phaseConfig.deadline}</em></p>`;
           }
@@ -357,6 +362,10 @@
     const yukiRadio = Array.isArray(bonuses.yuki_radio) ? bonuses.yuki_radio.length : (bonuses.yuki_radio || 0);
     if (yukiRadio > 0) {
       html += `<li>📻 <strong>Yuki grita</strong>: ${yukiRadio} vez(es) → <span class="text-green">+${yukiRadio} pts</span></li>`;
+    }
+
+    for (const phase of (bonuses.gasly_chef_phases || [])) {
+      html += `<li>👨‍🍳 <strong>Gasly chef</strong> en Fase ${phase} → <span class="text-green">puntos de fase ×2</span> para todos. Oui chef.</li>`;
     }
 
     // Penalties per player
@@ -395,7 +404,7 @@
           html += `<p class="text-muted" style="font-size:0.8rem; margin-left:1rem;">
             Pilotos: ${phaseData.drivers.map(id => { const d = getDriver(id); return d ? d.name : id; }).join(' → ')}
             <br>Equipos: ${(phaseData.constructors || []).map(id => { const t = getTeam(id); return t ? t.name : id; }).join(' → ')}
-            <br>Evento: ${phaseData.evento || '—'}
+            <br>Evento: ${phaseData.evento ? escapeHtml(phaseData.evento) : '—'}
           </p>`;
         } else {
           html += `<p><strong>${renderAvatar(p.id, 'avatar-sm')} ${p.name}:</strong> <span class="text-muted">Sin predicción</span></p>`;
@@ -412,4 +421,8 @@
 
   // --- Init ---
   loadData();
+
+  // Si el sync trae cambios (predicciones nuevas, resultados del admin...),
+  // recalculamos y repintamos
+  document.addEventListener('blc:state-updated', loadData);
 })();
