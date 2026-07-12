@@ -5,7 +5,7 @@ Family F1 prediction game for 4 players (Mariona, Amaya, Ana, Oscar). Static web
 
 ## Tech Stack
 - Vanilla HTML/CSS/JS (no frameworks)
-- JSONBin.io for shared state (1 bin per player + 1 global bin)
+- JSONBin.io for shared state (single bin, local-first with merge sync)
 - GitHub Pages hosting
 - Dark theme with F1/banana yellow accents (#FFD700)
 
@@ -19,7 +19,7 @@ f1banana/
 ├── css/style.css           ← F1-themed dark styling
 ├── js/
 │   ├── config.js           ← Players, drivers, teams, scoring rules, race calendar
-│   ├── storage.js          ← JSONBin.io abstraction (dev mode uses localStorage)
+│   ├── storage.js          ← Local-first storage + JSONBin merge sync (dev mode: localStorage only)
 │   ├── predicciones.js     ← Prediction form logic & driver/team pickers
 │   ├── clasificacion.js    ← Scoring engine & leaderboard rendering
 │   └── admin.js            ← Admin panel: results entry, bonuses, penalties
@@ -28,8 +28,9 @@ f1banana/
 ```
 
 ## Key Architecture Decisions
-- **DEV_MODE** (`config.js`): When `true`, uses `localStorage` instead of JSONBin.io. Set to `false` for production.
-- **Player session**: `sessionStorage.blc_player` holds current player ID. Set on index.html.
+- **DEV_MODE** (`config.js`): When `true`, uses `localStorage` only (no sync). Set to `false` for production.
+- **Local-first storage** (`storage.js`): state always lives in `localStorage` (`blc_data`) and is read/written instantly; JSONBin is a sync target. A sync cycle (pull → merge → push) reconciles local and remote — never a blind PUT, so a network failure can never wipe the bin. Merge is per-subtree with timestamps (`state.stamps`): each `players.{id}`, `avatars.{id}`, `statuses.{id}` and each `global` section carries its own stamp; newest wins (tie → remote). Sync triggers: page load, after each save, `online`, `visibilitychange`, and every 60s while visible. A fixed badge (top-right) shows sync status; `blc:state-updated` fires when a sync brings changes so pages can re-render.
+- **Player session**: cookie `blc_player` holds current player ID (set on index.html via 4-digit code). A personal link `index.html?player=<id>` claims the device without a code — links are listed in the admin panel for sharing.
 - **Privacy**: Each player only sees their own predictions. Other players' predictions revealed after phase deadline.
 - **Scoring engine**: Lives in `clasificacion.js`. Calculates per-phase driver/constructor accuracy, consolation points, evento, órdago, bonuses, and penalties.
 

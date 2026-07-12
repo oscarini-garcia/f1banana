@@ -412,4 +412,8 @@
 
   // --- Init ---
   loadData();
+
+  // Si el sync trae cambios (predicciones nuevas, resultados del admin...),
+  // recalculamos y repintamos
+  document.addEventListener('blc:state-updated', loadData);
 })();

@@ -75,7 +75,7 @@
     }
 
     try {
-      await Storage.saveGlobalData(globalData);
+      await Storage.saveGlobalData(globalData, ['eventos']);
       showToast('Eventos guardados');
     } catch (e) {
       showToast('Error: ' + e.message);
@@ -126,7 +126,7 @@
     }
 
     try {
-      await Storage.saveGlobalData(globalData);
+      await Storage.saveGlobalData(globalData, ['ordagoVotes']);
       showToast('Votos de órdago guardados');
     } catch (e) {
       showToast('Error: ' + e.message);
@@ -158,7 +158,7 @@
     globalData.bonuses.yuki_radio = parseInt(document.getElementById('yukiRadio').value) || 0;
 
     try {
-      await Storage.saveGlobalData(globalData);
+      await Storage.saveGlobalData(globalData, ['bonuses']);
       showToast('Bonos guardados');
     } catch (e) {
       showToast('Error: ' + e.message);
@@ -201,7 +201,7 @@
     }
 
     try {
-      await Storage.saveGlobalData(globalData);
+      await Storage.saveGlobalData(globalData, ['penalties']);
       showToast('Penalizaciones guardadas');
     } catch (e) {
       showToast('Error: ' + e.message);
@@ -278,13 +278,45 @@
     }
 
     try {
-      await Storage.saveGlobalData(globalData);
+      await Storage.saveGlobalData(globalData, ['unlocks']);
       showToast('Desbloqueos guardados');
       renderUnlocks();
     } catch (e) {
       showToast('Error: ' + e.message);
     }
   });
+
+  // --- Personal links ---
+  function renderPersonalLinks() {
+    const base = new URL('index.html', window.location.href).href;
+    let html = '';
+    for (const p of CONFIG.PLAYERS) {
+      const link = `${base}?player=${p.id}`;
+      html += `
+        <div class="personal-link-row">
+          <span class="personal-link-name">${renderAvatar(p.id, 'avatar-sm')} <strong>${p.name}</strong></span>
+          <input type="text" readonly value="${link}" id="link_${p.id}">
+          <button class="btn btn-secondary btn-small" data-link="${link}" data-input="link_${p.id}">Copiar</button>
+        </div>
+      `;
+    }
+    document.getElementById('personalLinks').innerHTML = html;
+
+    document.querySelectorAll('#personalLinks button').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(btn.dataset.link);
+          showToast('Link copiado');
+        } catch {
+          // Fallback (http o navegadores viejos): seleccionar para copiar a mano
+          const input = document.getElementById(btn.dataset.input);
+          input.focus();
+          input.select();
+          showToast('Copia el link seleccionado');
+        }
+      });
+    });
+  }
 
   // --- Change player ---
   document.getElementById('btnChangePlayer').addEventListener('click', () => {
@@ -320,5 +352,6 @@
     renderOrdagoVoting();
     renderPenalties();
     renderUnlocks();
+    renderPersonalLinks();
   }
 })();

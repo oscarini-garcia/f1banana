@@ -309,6 +309,13 @@
       await renderEventos();
       initTicker();
     })();
+
+    // Si el sync trae cambios de otros jugadores, refrescamos la vista
+    document.addEventListener('blc:state-updated', async () => {
+      await loadAvatars();
+      renderView();
+      await renderEventos();
+    });
   </script>
 </body>
 </html>

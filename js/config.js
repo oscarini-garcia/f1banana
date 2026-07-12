@@ -397,7 +397,15 @@ document.querySelectorAll('.build-time').forEach(el => {
 });
 
 // --- Session via cookie (persists across browser restarts) ---
+// Un link personal (?player=amaya) reclama el dispositivo: la identidad
+// queda guardada y sobrevive a abrir la app después sin el link.
+// Ids desconocidos se ignoran para que nadie entre como usuario fantasma.
 function getSessionPlayer() {
+  const urlId = new URLSearchParams(window.location.search).get('player');
+  if (urlId && CONFIG.PLAYERS.some(p => p.id === urlId)) {
+    setSessionPlayer(urlId);
+    return urlId;
+  }
   const match = document.cookie.match(/(?:^|; )blc_player=([^;]*)/);
   if (match) return decodeURIComponent(match[1]);
   // Migrate from sessionStorage if exists
